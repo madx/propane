@@ -1,0 +1,206 @@
+set nocompatible
+
+call pathogen#infect()
+
+set shortmess+=I
+
+filetype plugin indent on
+set ruler
+syntax on
+set background=dark
+colorscheme default
+let mapleader = ","
+set clipboard+=unnamedplus
+set showcmd
+set hidden
+set nojoinspaces
+set laststatus=2
+
+set spelllang=fr
+
+" Whitespace
+set ai
+set si
+set so=5
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set nowrap
+set smarttab
+
+set fillchars+=vert:\ 
+
+" No backup/swap files
+set backupdir=
+set directory=
+set nowritebackup
+set noswapfile
+
+" Search
+" set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" Ignores
+set wildignore+=tmp/**
+set wildignore+=app/assets/images/**
+set wildignore+=public/images/**
+set wildignore+=.git,.svn
+
+" Default status line with padding
+set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\ 
+
+" Nicer mouse editing
+set ve=block
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Numbering
+
+set nonumber
+set norelativenumber
+" autocmd InsertEnter * :set relativenumber!
+" autocmd InsertLeave * :set relativenumber
+noremap <Leader>nn :set number! relativenumber!<cr>
+" noremap ,nN :set relativenumber<cr>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" CUSTOM MAPPINGS
+
+nnoremap <Space> .
+nnoremap ' `
+nnoremap ` '
+
+" Copy/paste
+vnoremap <Leader>C "*y
+vnoremap <Leader>X "*d
+noremap  <Leader>V "*p
+
+" Commenting
+nmap <Leader>c gcc
+vmap <Leader>c gc
+
+" File navigation
+nmap <Leader>aa :next<cr>
+nmap <Leader>aA :prev<cr>
+nmap <Leader>bb :bn<cr>
+nmap <Leader>bB :bp<cr>
+nmap <Leader>b<Space> :b#<cr>
+nmap <Leader>qq :cn<cr>zz
+nmap <Leader>qQ :cp<cr>zz
+
+" Tabular
+vmap <Leader>= :Tabularize /=<cr>
+
+" Conflict resolution
+nmap <Leader>in /^\(<<<<\\|====\\|>>>>\)<cr>
+nmap <Leader>ip ?^\(<<<<\\|====\\|>>>>\)<cr>
+
+" Search for word under cursor
+nmap <Leader>S yiw:Ack <C-R>"<cr>
+vmap <Leader>S :<C-W>Ack <C-R>*<cr>
+
+" Edit macros
+nmap <Leader>eri :call Inliner_RubyInlineVariable()<cr>
+nmap <Leader>erc :call Inliner_RubyInlineConditional()<cr>
+nmap <Leader>erx :silent !erx % &<cr>
+map Q gq
+nnoremap < <<
+nnoremap > >>
+
+" Quick navigation
+noremap <C-J> J^
+noremap <C-K> kJ^
+noremap J 10j
+noremap K 10k
+
+" Block/Line selection with mouse
+noremap <M-LeftMouse> <4-LeftMouse>
+inoremap <M-LeftMouse> <4-LeftMouse>
+onoremap <M-LeftMouse> <C-C><4-LeftMouse>
+noremap <M-LeftDrag> <LeftDrag>
+inoremap <M-LeftDrag> <LeftDrag>
+onoremap <M-LeftDrag> <C-C><LeftDrag>
+
+noremap <S-LeftMouse> <3-LeftMouse>
+inoremap <S-LeftMouse> <3-LeftMouse>
+onoremap <S-LeftMouse> <C-C><3-LeftMouse>
+noremap <S-LeftDrag> <LeftDrag>
+inoremap <S-LeftDrag> <LeftDrag>
+onoremap <S-LeftDrag> <C-C><LeftDrag>
+
+" Easy window management
+nmap <silent> <leader>w<Space> :call FocusMasterWindow()<CR>
+nmap <silent> <leader>w<CR>    :call SwapWithMasterWindow()<CR>
+nmap <silent> <leader>wm       :call MarkWindowSwap()<CR>
+nmap <silent> <leader>wx       :call DoWindowSwap()<CR>
+nmap <silent> <leader>w <C-W>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" EVENTS
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" MISC
+
+" Expand %% to dir of current file
+cmap %% <C-R>=expand('%:h').'/'<cr>
+
+" Trim whitespace at line ends
+map <F2> <Esc>:%s/\s\+$//<CR>
+com! Trim exe "%s/\\s\\+$//"
+com! Date exe "r!date +'date: \\%FT\\%R\\%:z'"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" PLUGINS
+
+" Gist-Vim
+so $HOME/.vim/gist
+
+" CommandT
+" let g:CommandTMaxHeight=10
+" let g:CommandTMatchWindowReverse=1
+" let g:CommandTMaxFiles=1000
+" let g:CommandTMaxCachedDirectories=3
+
+" CtrlP
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_map = ''
+nmap <Leader>oo :CtrlP<cr>
+nmap <Leader>of :CtrlPMixed<cr>
+nmap <Leader>ob :CtrlPBuffer<cr>
+nmap <Leader>or :CtrlPMRU<cr>
+
+" Ack-Vim
+let g:ackprg="ag --nocolor --nogroup --column"
+
+" Align
+nmap <Leader>Asym :Align! l:p0P1 :
+nmap <Leader>Astr :Align! l:p0P1 "
+nmap <Leader>A=   :Align! l:p0P1 =
+
+" Instant MarkDown
+let g:instant_markdown_autostart = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" GVIM
+
+if has('gui_running')
+  " colorscheme railscasts-custom
+  colorscheme jellybeans
+  " set background=light
+  set guioptions=aegict
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
+  set listchars=nbsp:⋅,trail:⋅
+  if ! exists("g:startedonce")
+    set columns=86
+    set lines=32
+    let g:startedonce = 1
+  endif
+  autocmd GUIEnter * set visualbell t_vb=
+
+  " Airline
+  let g:airline_powerline_fonts = 1
+  let g:airline_theme = "jellybeans"
+endif
