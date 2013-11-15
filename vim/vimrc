@@ -42,6 +42,9 @@ set incsearch
 set ignorecase
 set smartcase
 
+" Mouse is fine
+set mouse=a
+
 " Ignores
 set wildignore+=tmp/**
 set wildignore+=app/assets/images/**
