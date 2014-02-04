@@ -5,7 +5,7 @@ VIMDIR = $(HOME)/.vim
 
 all: $(VIMRC) vimfiles
 
-$(VIMRC):
+$(VIMRC): vimrc
 	cp -f vimrc $(VIMRC)
 
 $(VIMDIR):
