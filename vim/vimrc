@@ -12,7 +12,7 @@ Bundle "editorconfig/editorconfig-vim"
 Bundle "suan/vim-instant-markdown"
 Bundle "tpope/vim-surround"
 Bundle "tomtom/tcomment_vim"
-Bundle "Townk/vim-autoclose"
+Bundle "jiangmiao/auto-pairs"
 Bundle "tsaleh/vim-matchit"
 Bundle "ervandew/supertab"
 
@@ -56,7 +56,7 @@ set expandtab
 set nowrap
 set smarttab
 
-set fillchars+=vert:\ 
+set fillchars+=vert:\
 
 " No backup/swap files
 set backupdir=
@@ -80,7 +80,7 @@ set wildignore+=public/images/**
 set wildignore+=.git,.svn
 
 " Default status line with padding
-set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\ 
+set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\
 
 " Nicer mouse editing
 set ve=block
