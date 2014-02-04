@@ -1,11 +1,23 @@
 # Install Vim distribution
 
-VIMRC=${HOME}/.vimrc
+VIMRC  = $(HOME)/.vimrc
+VIMDIR = $(HOME)/.vim
 
-all: install_vimrc
+all: ${VIMRC} vimfiles
 
-install_vimrc:
-	cp -f vimrc ${VIMRC}
+$(VIMRC):
+	cp -f vimrc $(VIMRC)
 
+$(VIMDIR):
+	mkdir -p $(VIMDIR)
 
-.PHONY: all install_vimrc
+vimfiles: $(VIMDIR) vundle
+	cp -rf spell $(VIMDIR)/spell
+
+vundle: $(VIMDIR)/bundle/vundle
+	vim +BundleInstall +qall
+
+$(VIMDIR)/bundle/vundle:
+	git clone https://github.com/gmarik/vundle.git $(VIMDIR)/bundle/vundle
+
+.PHONY: all vundle
