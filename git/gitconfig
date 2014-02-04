@@ -1,0 +1,86 @@
+[user]
+  name = "François Vaux"
+  email = madx@yapok.org
+	identity = default
+[alias]
+  ## Aliases
+  # Commit
+  ci = commit -v
+  ca = commit --all -v
+  fixup = commit --fixup
+  squash = commit --squash
+  root = !echo ${PWD%$GIT_PREFIX}
+  amend = commit --amend --no-edit
+
+  # Index manipulation
+  co = checkout
+  cb = checkout -b
+  rb = rebase
+  au = add -u
+  ap = add -p
+
+  # Inspection
+  st = status -sb
+  hist = log --pretty=format:'%C(yellow)%h%Creset %s%C(red)%d%Creset% C(cyan)%aN @ %ar%Creset'
+  ls = !git hist -5
+  lsm = !git hist -10
+  lsmm = !git hist -20
+  ll = !git ls --stat
+  df = diff --no-prefix
+  ds = diff --no-prefix --staged
+  dt = diff --stat
+  mdr = !git diff | mdr
+  mds = !git diff --staged | mdr
+  div = !git hist ${1:-$(git upstream)}^\\! HEAD
+  upstream = rev-parse --symbolic-full-name --abbrev-ref @{u}
+
+  # Merging and rebasing
+  aprb = !git rebase -i `git upstream`
+  ff = merge --ff-only
+  resolve   = !sh -c 'git conflicts && $EDITOR $(git conflicts) +\"/<<<<\"'
+  conflicts = !sh -c 'git st | grep ^UU | sed "s/UU\\ //"'
+
+  # Misc
+  hub-clone = !sh -c 'git clone git://github.com/$0.git'
+  id = identity
+  aliases = !sh -c 'sed -e "/^\\\\[alias\\\\]/,/^\\\\[/!d" ~/.gitconfig | head -n-1 | tail -n+4'
+  show-alias = !sh -c 'grep "\\\\\\<$0\\\\\\>" ~/.gitconfig'
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = white
+[help]
+  browser = firefox
+[push]
+  default = upstream
+[rebase]
+  autosquash = true
+[core]
+  whitespace = trailing-space,space-before-tab,tab-in-indent
+[pull]
+	rebase = true
+[identity "default"]
+  name = "François Vaux"
+  email = madx@yapok.org
+[identity "github"]
+	name = madx
+	email = madx+github@yapok.org
+[identity "wyplay"]
+	name = "François Vaux"
+  email = fvaux@wyplay.com
+[diff]
+	tool = gvimdiff
