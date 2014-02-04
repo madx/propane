@@ -1,6 +1,34 @@
 set nocompatible
 
-call pathogen#infect()
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle "gmarik/vundle"
+
+Bundle "mileszs/ack.vim"
+Bundle "kien/ctrlp.vim"
+Bundle "vim-scripts/Align"
+Bundle "editorconfig/editorconfig-vim"
+Bundle "suan/vim-instant-markdown"
+Bundle "tpope/vim-surround"
+Bundle "tomtom/tcomment_vim"
+Bundle "Townk/vim-autoclose"
+Bundle "tsaleh/vim-matchit"
+Bundle "ervandew/supertab"
+
+Bundle "madx/vim-plugins"
+
+" Language support
+Bundle "evanmiller/nginx-vim-syntax"
+Bundle "kchmck/vim-coffee-script"
+Bundle "nono/vim-handlebars"
+Bundle "othree/html5-syntax.vim"
+Bundle "pangloss/vim-javascript"
+Bundle "rainux/vim-vala"
+Bundle "slim-template/vim-slim"
+Bundle "tmatilai/vim-monit"
+Bundle "tpope/vim-markdown"
+Bundle "vim-ruby/vim-ruby"
 
 set shortmess+=I
 
@@ -134,11 +162,20 @@ inoremap <S-LeftDrag> <LeftDrag>
 onoremap <S-LeftDrag> <C-C><LeftDrag>
 
 " Easy window management
-nmap <silent> <leader>w<Space> :call FocusMasterWindow()<CR>
-nmap <silent> <leader>w<CR>    :call SwapWithMasterWindow()<CR>
-nmap <silent> <leader>wm       :call MarkWindowSwap()<CR>
-nmap <silent> <leader>wx       :call DoWindowSwap()<CR>
-nmap <silent> <leader>w <C-W>
+nmap <silent> <leader>w<Space> :call WMFocusMasterWindow()<CR>
+nmap <silent> <leader>w<CR>    :call WMSwapWithMasterWindow()<CR>
+nmap <silent> <leader>wm       :call WMMarkWindowSwap()<CR>
+nmap <silent> <leader>wx       :call WMDoWindowSwap()<CR>
+nmap <silent> <leader>wt       :call WMReStack()<CR>
+nmap <silent> <leader>w       <C-w>
+" nmap <silent> <leader>wh       <C-w>h
+" nmap <silent> <leader>wj       <C-w>j
+" nmap <silent> <leader>wk       <C-w>k
+" nmap <silent> <leader>wl       <C-w>l
+" nmap <silent> <leader>wv       <C-w>v
+" nmap <silent> <leader>wV       <C-w>V
+" nmap <silent> <leader>ws       <C-w>s
+" nmap <silent> <leader>wS       <C-w>S
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -159,13 +196,10 @@ com! Date exe "r!date +'date: \\%FT\\%R\\%:z'"
 "" PLUGINS
 
 " Gist-Vim
-so $HOME/.vim/gist
-
-" CommandT
-" let g:CommandTMaxHeight=10
-" let g:CommandTMatchWindowReverse=1
-" let g:CommandTMaxFiles=1000
-" let g:CommandTMaxCachedDirectories=3
+let s:gistrc = expand($HOME . ".vim/gist.vim")
+if filereadable(s:gistrc)
+  exec ":so " . s:gistrc
+endif
 
 " CtrlP
 let g:ctrlp_clear_cache_on_exit = 1
@@ -202,8 +236,4 @@ if has('gui_running')
     let g:startedonce = 1
   endif
   autocmd GUIEnter * set visualbell t_vb=
-
-  " Airline
-  let g:airline_powerline_fonts = 1
-  let g:airline_theme = "jellybeans"
 endif
