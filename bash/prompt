@@ -1,0 +1,57 @@
+#!/bin/bash
+
+function __prompt_git_dirty {
+  git diff --quiet 2>/dev/null || echo -e "*"
+}
+
+function __prompt_git_sha1 {
+  sha1="$(git log --no-color -1 --pretty=format:%h 2>/dev/null)"
+  if [ $? = 0 ]; then echo "$sha1"; fi
+}
+
+function __prompt_git_branch {
+  str="$(/usr/lib/git-core/git-symbolic-ref HEAD 2>/dev/null)"
+  if [ $? = 0 ]; then
+    echo " ${str#refs/heads/}$(__prompt_git_dirty):$(__prompt_git_sha1)"
+  fi
+}
+
+function __prompt_git_wd {
+  gitdir="$(git rev-parse --git-dir 2>/dev/null)"
+
+  if [ $? = 0 ]; then
+    if [ "$(git config --get core.bare)" = "true" ]; then
+      echo "$(basename "$(pwd)")"
+    else
+      if [ "$gitdir" = ".git" ]; then
+        echo "$(basename "$PWD")"
+      elif [ "$gitdir" = "." ]; then
+        dir=$PWD
+        while [ "$(basename $dir)" != ".git" ]; do
+          dir=$(dirname $dir)
+        done
+        echo "$(basename $(dirname "$dir")) ${PWD#$(dirname "$dir")/}"
+      else
+        echo "${PWD#$(dirname $(dirname "$gitdir"))/}"
+      fi
+    fi
+  else
+    pwd | sed "s/\/home\//\~/"
+  fi
+}
+
+function __printbar {
+  eval printf '%.0s$2' {1..$1}
+}
+
+function __hbar {
+  __printbar $(tput cols) ─
+}
+
+export PS1='\[\e[G\e[1;30m\]$(__hbar)\[\e[0m\]\r\[\e[1;${PC}m\]$(__prompt_git_wd)\[\e[0m\]$(__prompt_git_branch)`if [ $__RET -ne 0 ]; then echo " \e[1;41;37m $__RET \e[0m"; fi` \n↳ '
+
+case "$TERM" in
+xterm*|rxvt*)
+  PROMPT_COMMAND='__RET=$?;__COLS=`tput cols`;echo -ne "\033]0;$USER@$HOSTNAME: $(__prompt_git_wd)$(__prompt_git_branch)\007"'
+  ;;
+esac
