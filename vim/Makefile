@@ -1,18 +1,20 @@
 # Install Vim distribution
 
+CURRENT_DIR = $(shell pwd)
+
 VIMRC  = $(HOME)/.vimrc
 VIMDIR = $(HOME)/.vim
 
 all: $(VIMRC) vimfiles
 
 $(VIMRC): vimrc
-	cp -f vimrc $(VIMRC)
+	ln -s $(CURRENT_DIR)/vimrc $(VIMRC)
 
 $(VIMDIR):
 	mkdir -p $(VIMDIR)
 
 vimfiles: $(VIMDIR) vundle
-	cp -rf spell $(VIMDIR)/spell
+	ln -s $(CURRENT_DIR)/spell $(VIMDIR)/spell
 
 vundle: $(VIMDIR)/bundle/vundle
 	vim +BundleInstall +qall

@@ -1,14 +1,16 @@
 # Install Bash configuration
 
+CURRENT_DIR = $(shell pwd)
+
 BASHRC  = $(HOME)/.bashrc
 PROMPT = $(HOME)/.prompt
 
 all: $(BASHRC) $(PROMPT)
 
 $(BASHRC): bashrc
-	cp -f bashrc $(BASHRC)
+	ln -s $(CURRENT_DIR)/bashrc $(BASHRC)
 
 $(PROMPT): prompt
-	cp -f prompt $(PROMPT)
+	ln -s $(CURRENT_DIR)/prompt $(PROMPT)
 
 .PHONY: all
