@@ -1,7 +1,7 @@
 [user]
   name = "François Vaux"
   email = madx@yapok.org
-	identity = default
+  identity = default
 [alias]
   ## Aliases
   # Commit
@@ -72,15 +72,15 @@
 [core]
   whitespace = trailing-space,space-before-tab,tab-in-indent
 [pull]
-	rebase = true
+  rebase = true
 [identity "default"]
   name = "François Vaux"
   email = madx@yapok.org
 [identity "github"]
-	name = madx
-	email = madx+github@yapok.org
+  name = madx
+  email = madx+github@yapok.org
 [identity "wyplay"]
-	name = "François Vaux"
+  name = "François Vaux"
   email = fvaux@wyplay.com
 [diff]
-	tool = gvimdiff
+  tool = gvimdiff
