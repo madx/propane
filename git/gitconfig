@@ -71,6 +71,8 @@
   autosquash = true
 [core]
   whitespace = trailing-space,space-before-tab,tab-in-indent
+[include]
+  path = ~/.gitconfig.local
 [pull]
   rebase = true
 [identity "default"]
