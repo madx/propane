@@ -41,7 +41,7 @@
   conflicts = !sh -c 'git st | grep ^UU | sed "s/UU\\ //"'
 
   # Misc
-  hub-clone = !sh -c 'git clone git://github.com/$0.git'
+  hub-clone = !sh -c 'git clone git://github.com/$0.git $1'
   id = identity
   aliases = !sh -c 'sed -e "/^\\\\[alias\\\\]/,/^\\\\[/!d" ~/.gitconfig | head -n-1 | tail -n+4'
   show-alias = !sh -c 'grep "\\\\\\<$0\\\\\\>" ~/.gitconfig'
