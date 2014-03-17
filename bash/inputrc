@@ -1,0 +1,19 @@
+set show-all-if-ambiguous on
+
+"\eq": yank-last-arg
+"\eR": "tput resetOAOA"
+
+# Erases
+"\C-f": unix-filename-rubout
+
+# C-Left/C-Right
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
+
+# Up/Down
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# C-Up/C-Down
+"\e[1;5A": previous-history
+"\e[1;5B": next-history
