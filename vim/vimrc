@@ -12,7 +12,7 @@ Bundle "editorconfig/editorconfig-vim"
 Bundle "suan/vim-instant-markdown"
 Bundle "tpope/vim-surround"
 Bundle "tomtom/tcomment_vim"
-Bundle "jiangmiao/auto-pairs"
+Bundle "Raimondi/delimitMate"
 Bundle "tsaleh/vim-matchit"
 Bundle "ervandew/supertab"
 
@@ -29,6 +29,8 @@ Bundle "slim-template/vim-slim"
 Bundle "tmatilai/vim-monit"
 Bundle "tpope/vim-markdown"
 Bundle "vim-ruby/vim-ruby"
+Bundle "wavded/vim-stylus"
+Bundle "digitaltoad/vim-jade"
 
 set shortmess+=I
 
