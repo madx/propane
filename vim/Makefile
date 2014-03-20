@@ -2,19 +2,20 @@
 
 CURRENT_DIR = $(shell pwd)
 
-VIMRC  = $(HOME)/.vimrc
-VIMDIR = $(HOME)/.vim
+VIMRC    = $(HOME)/.vimrc
+VIMDIR   = $(HOME)/.vim
+VIMSPELL = $(HOME)/.vim/spell
 
-all: $(VIMRC) vimfiles
+all: $(VIMRC) $(VIMSPELL) vundle
 
 $(VIMRC): vimrc
 	ln -s $(CURRENT_DIR)/vimrc $(VIMRC)
 
+$(VIMSPELL): spell | $(VIMDIR)
+	ln -s $(CURRENT_DIR)/spell $(VIMSPELL)
+
 $(VIMDIR):
 	mkdir -p $(VIMDIR)
-
-vimfiles: $(VIMDIR) vundle
-	ln -s $(CURRENT_DIR)/spell $(VIMDIR)/spell
 
 vundle: $(VIMDIR)/bundle/vundle
 	vim +BundleInstall +qall
