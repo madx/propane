@@ -1,0 +1,29 @@
+snippet document
+	<!doctype html>
+	<html>
+		<head>
+			<meta charset="utf-8" />
+			<title>${1:`Filename()`}</title>
+		</head>
+		<body>
+			${2}
+		</body>
+	</html>
+
+snippet cdata
+	<![CDATA[
+		${1}
+	]]>
+
+snippet stylesheet
+	<link rel="stylesheet" href="${1}" ${2:media="screen"} />
+
+snippet script Load a remote script
+	<script src="${1}"></script>
+
+snippet script Inline script
+	<script>
+		<![CDATA[
+			${1}
+		]]>
+	</script>

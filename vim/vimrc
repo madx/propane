@@ -5,6 +5,8 @@ call vundle#rc()
 
 Bundle "gmarik/vundle"
 
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
 Bundle "mileszs/ack.vim"
 Bundle "kien/ctrlp.vim"
 Bundle "vim-scripts/Align"
@@ -15,6 +17,7 @@ Bundle "tomtom/tcomment_vim"
 Bundle "Raimondi/delimitMate"
 Bundle "tsaleh/vim-matchit"
 Bundle "ervandew/supertab"
+Bundle "garbas/vim-snipmate"
 
 Bundle "madx/vim-plugins"
 
