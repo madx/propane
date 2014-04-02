@@ -9,21 +9,23 @@ snippet document
 			${2}
 		</body>
 	</html>
-
 snippet cdata
 	<![CDATA[
 		${1}
 	]]>
-
-snippet stylesheet
+snippet css Load a stylesheet from a file
 	<link rel="stylesheet" href="${1}" ${2:media="screen"} />
-
-snippet script Load a remote script
+snippet css Inline stylesheet
+	<style>
+		/* <![CDATA[ */
+			${1}
+		/* ]]> */
+	</style>
+snippet script Load a script from a file
 	<script src="${1}"></script>
-
 snippet script Inline script
 	<script>
-		<![CDATA[
+		/* <![CDATA[ */
 			${1}
-		]]>
+		/* ]]> */
 	</script>
