@@ -240,5 +240,5 @@ if has('gui_running')
     set lines=32
     let g:startedonce = 1
   endif
-  autocmd GUIEnter * set visualbell t_vb=
+  autocmd GUIEnter * set novisualbell t_vb=
 endif
