@@ -25,6 +25,11 @@ export PROMPT_COMMAND='history -a'
 # Couleur du prompt
 PC=31
 
+# Ajouter les binaires personnalisés
+if [ -d ~/bin ]; then
+  export PATH=$PATH:$HOME/bin
+fi
+
 # Importer le fichier ~/.bashrc_local
 if [ -f ~/.bashrc_local ]; then
   . ~/.bashrc_local
