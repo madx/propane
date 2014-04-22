@@ -7,7 +7,7 @@ INPUTRC     = $(HOME)/.inputrc
 PROMPT      = $(HOME)/.prompt
 BASH_CONFIG = $(HOME)/.config/bash
 
-all: $(BASHRC) $(INPUTRC) $(PROMPT)
+all: $(BASHRC) $(INPUTRC) $(PROMPT) $(BASH_CONFIG)
 
 $(BASHRC): bashrc
 	ln -s $(CURRENT_DIR)/bashrc $(BASHRC)
