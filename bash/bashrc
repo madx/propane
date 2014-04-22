@@ -3,17 +3,7 @@
 # Ne rien faire s'il n'est pas lancé de façon interactive
 [ -z "$PS1" ] && return
 
-# Default umask (rwXr-X--X)
-umask 026
-
-# Variables d'environnement
-export EDITOR=vim
-export PAGER='less -R'
-export GREP_OPTIONS='--color=auto'
-
-export XDG_CONFIG_HOME='/home/madx/.config'
-export XDG_DATA_HOME='/home/madx/.local/share'
-export XDG_CACHE_HOME='/home/madx/.cache'
+. ~/.config/bash/environment
 
 # Désactiver les doublons dans l'historique
 export HISTCONTROL=erasedups
@@ -79,17 +69,3 @@ if [ -f ~/.prompt ]; then
   . ~/.prompt
 fi
 
-# Couleur dans les manpages
-export LESS_TERMCAP_mb=$(tput bold; tput setaf 2)
-export LESS_TERMCAP_md=$(tput bold)
-export LESS_TERMCAP_me=$(tput sgr0)
-export LESS_TERMCAP_so=$(tput bold; tput rev)
-export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
-export LESS_TERMCAP_us=$(tput setaf 4; tput bold)
-export LESS_TERMCAP_ue=$(tput sgr0)
-export LESS_TERMCAP_mr=$(tput rev)
-export LESS_TERMCAP_mh=$(tput dim)
-export LESS_TERMCAP_ZN=$(tput ssubm)
-export LESS_TERMCAP_ZV=$(tput rsubm)
-export LESS_TERMCAP_ZO=$(tput ssupm)
-export LESS_TERMCAP_ZW=$(tput rsupm)
