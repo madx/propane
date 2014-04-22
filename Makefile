@@ -1,7 +1,7 @@
-all: bash git vim
+all: shell git vim
 
-bash:
-	make -C bash
+shell:
+	make -C shell
 
 git:
 	make -C git
@@ -9,4 +9,4 @@ git:
 vim:
 	make -C vim
 
-.PHONY: all bash git vim
+.PHONY: all shell git vim
