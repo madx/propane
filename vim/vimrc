@@ -234,7 +234,7 @@ if has('gui_running')
   colorscheme jellybeans
   " set background=light
   set guioptions=aegict
-  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
+  set guifont=Droid\ Sans\ Mono\ 10
   set listchars=nbsp:⋅,trail:⋅
   if ! exists("g:startedonce")
     set columns=86
