@@ -22,7 +22,7 @@
 
   # Inspection
   st = status -sb
-  hist = log --pretty=format:'%C(yellow)%h%Creset %s%C(red)%d%Creset% C(cyan)%aN @ %ar%Creset'
+  hist = log --pretty=oneline --abbrev-commit --decorate
   ls = !git hist -5
   lsm = !git hist -10
   lsmm = !git hist -20
