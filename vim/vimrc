@@ -211,6 +211,7 @@ if filereadable(s:gistrc)
 endif
 
 " CtrlP
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_map = ''
 nmap <Leader>oo :CtrlP<cr>
