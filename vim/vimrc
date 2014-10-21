@@ -1,39 +1,43 @@
 set nocompatible
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-Bundle "gmarik/vundle"
+Plugin 'gmarik/Vundle.vim'
 
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "mileszs/ack.vim"
-Bundle "kien/ctrlp.vim"
-Bundle "vim-scripts/Align"
-Bundle "editorconfig/editorconfig-vim"
-Bundle "suan/vim-instant-markdown"
-Bundle "tpope/vim-surround"
-Bundle "tomtom/tcomment_vim"
-Bundle "Raimondi/delimitMate"
-Bundle "tsaleh/vim-matchit"
-Bundle "ervandew/supertab"
-Bundle "garbas/vim-snipmate"
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'vim-scripts/Align'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'suan/vim-instant-markdown'
+Plugin 'tpope/vim-surround'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'tsaleh/vim-matchit'
+Plugin 'ervandew/supertab'
+Plugin 'garbas/vim-snipmate'
+Plugin 'altercation/vim-colors-solarized'
 
-Bundle "madx/vim-plugins"
+Plugin 'madx/vim-plugins'
 
 " Language support
-Bundle "evanmiller/nginx-vim-syntax"
-Bundle "kchmck/vim-coffee-script"
-Bundle "nono/vim-handlebars"
-Bundle "othree/html5-syntax.vim"
-Bundle "pangloss/vim-javascript"
-Bundle "rainux/vim-vala"
-Bundle "slim-template/vim-slim"
-Bundle "tmatilai/vim-monit"
-Bundle "tpope/vim-markdown"
-Bundle "vim-ruby/vim-ruby"
-Bundle "wavded/vim-stylus"
-Bundle "digitaltoad/vim-jade"
+Plugin 'evanmiller/nginx-vim-syntax'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'nono/vim-handlebars'
+Plugin 'othree/html5-syntax.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'rainux/vim-vala'
+Plugin 'slim-template/vim-slim'
+Plugin 'tmatilai/vim-monit'
+Plugin 'tpope/vim-markdown'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'wavded/vim-stylus'
+Plugin 'digitaltoad/vim-jade'
+
+call vundle#end()
 
 set shortmess+=I
 
