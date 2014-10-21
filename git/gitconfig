@@ -7,16 +7,19 @@
   # Commit
   ci = commit -v
   ca = commit --all -v
-  fixup = commit --fixup
+  fixup = git commit --fixup
   squash = commit --squash
   root = !echo ${PWD%$GIT_PREFIX}
   amend = commit --amend --no-edit
   cp = cherry-pick
 
+  # History editing
+  rb = rebase
+  quick-rebase = !EDITOR=cat git rebase -i
+
   # Index manipulation
   co = checkout
   cb = checkout -b
-  rb = rebase
   au = add -u
   ap = add -p
 
@@ -30,16 +33,15 @@
   df = diff --no-prefix
   ds = diff --no-prefix --staged
   dt = diff --stat
-  mdr = !git diff | mdr
-  mds = !git diff --staged | mdr
+  mdr = !git diff $@ | mdr
+  mds = !git diff --staged $@ | mdr
   div = !git hist ${1:-$(git upstream)}^\\! HEAD
-  upstream = rev-parse --symbolic-full-name --abbrev-ref @{u}
 
   # Merging and rebasing
-  aprb = !git rebase -i `git upstream`
   ff = merge --ff-only
   resolve   = !sh -c 'git conflicts && $EDITOR $(git conflicts) +\"/<<<<\"'
   conflicts = !sh -c 'git st | grep ^UU | sed "s/UU\\ //"'
+  mark-resolved = !git add `git conflicts`
 
   # Misc
   hub-clone = !sh -c 'git clone git://github.com/$0.git $1'
