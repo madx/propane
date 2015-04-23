@@ -20,7 +20,7 @@ $(SNIPPETS): spell | $(VIMDIR)
 	ln -s $(CURRENT_DIR)/snippets $(SNIPPETS)
 
 $(VUNDLE):
-	git clone https://github.com/gmarik/vundle.git $(VIMDIR)/bundle/vundle
+	git clone https://github.com/gmarik/Vundle.vim.git $(VIMDIR)/bundle/Vundle.vim
 
 $(VIMDIR):
 	mkdir -p $(VIMDIR)
