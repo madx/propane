@@ -7,7 +7,7 @@
   # Commit
   ci = commit -v
   ca = commit --all -v
-  fixup = git commit --fixup
+  fixup = commit --fixup
   squash = commit --squash
   root = !echo ${PWD%$GIT_PREFIX}
   amend = commit --amend --no-edit
