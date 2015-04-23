@@ -6,7 +6,7 @@
 umask 026
 
 # Add ~/bin to $PATH
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$PATH:./node_modules/.bin/"
 
 # Default programs and program options
 export EDITOR=vim
