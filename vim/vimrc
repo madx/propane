@@ -229,10 +229,16 @@ let g:markdown_fenced_languages = ['ruby', 'javascript', 'sh']
 
 " Syntastic
 let g:syntastic_enable_signs = 1
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['eslint', 'jshint']
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_check_on_open = 1
+
+function! SetJSChecker(checker)
+  let g:syntastic_javascript_checkers = [a:checker]
+endfunction
+com! Eslint call SetJSChecker('eslint')
+com! Jshint call SetJSChecker('jshint')
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" GVIM
