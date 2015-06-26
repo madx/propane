@@ -39,7 +39,8 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 # Activate vte.sh features
 if [ -r /etc/profile.d/vte.sh ]; then
   . /etc/profile.d/vte.sh
-else
+fi
+if ! which __vte_prompt_command >/dev/null 2>&1; then
   function __vte_prompt_command() {
     echo -n
   }
