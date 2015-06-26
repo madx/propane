@@ -47,20 +47,11 @@ fi
 
 # Ajouter le support de la couleur à la commande ls, + quelques alias utiles
 if [ "$TERM" != "dumb" ]; then
-  eval "`dircolors -b`"
+  eval "`TERM=xterm-256color dircolors -b`"
   alias ls='ls --color=auto'
   alias dir='ls --format=vertical'
   alias la='ls -Al'
 fi
-
-# Changer le titre de la fenêtre
-case "$TERM" in
-xterm*|rxvt*)
-  PROMPT_COMMAND='echo -ne "\033]0;Terminal: ${PWD/$HOME/~}\007"'
-  ;;
-*)
-  ;;
-esac
 
 export PS1='\[\e[${PC}m\]\W\[\e[0m\] $ '
 

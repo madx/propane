@@ -6,7 +6,7 @@
 umask 026
 
 # Add ~/bin to $PATH
-export PATH="$HOME/bin:$PATH:./node_modules/.bin/"
+export PATH="$HOME/bin:./node_modules/.bin/:$PATH"
 
 # Default programs and program options
 export EDITOR=vim
@@ -32,3 +32,9 @@ export LESS_TERMCAP_ZN=$(tput ssubm)
 export LESS_TERMCAP_ZV=$(tput rsubm)
 export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
+
+# Use NVM
+. ~/.nvm/nvm.sh
+
+# Activate vte.sh features
+. /etc/profile.d/vte.sh

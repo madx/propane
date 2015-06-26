@@ -52,8 +52,8 @@ export PS1='\[\e[G\e[1;30m\]$(__hbar)\[\e[0m\]\r\[\e[1;${PC}m\]$(__prompt_git_wd
 
 case "$TERM" in
 xterm*|rxvt*|screen*)
-  PROMPT_COMMAND='__RET=$?;__COLS=`tput cols`;echo -ne "\033]0;$USER@$HOSTNAME: $(__prompt_git_wd)$(__prompt_git_branch)\007"'
+  PROMPT_COMMAND='__RET=$?;__vte_prompt_command;_COLS=`tput cols`;echo -ne "\033]0;$USER@$HOSTNAME: $(__prompt_git_wd)$(__prompt_git_branch)\007"'
   ;;
 *)
-  PROMPT_COMMAND='__RET=$?;history -a'
+  PROMPT_COMMAND='__RET=$?;__vte_prompt_command;history -a'
 esac
