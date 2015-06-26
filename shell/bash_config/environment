@@ -34,7 +34,13 @@ export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 
 # Use NVM
-. ~/.nvm/nvm.sh
+[ -r ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh
 
 # Activate vte.sh features
-. /etc/profile.d/vte.sh
+if [ -r /etc/profile.d/vte.sh ]; then
+  . /etc/profile.d/vte.sh
+else
+  function __vte_prompt_command() {
+    echo -n
+  }
+fi
