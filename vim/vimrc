@@ -19,7 +19,6 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'tsaleh/vim-matchit'
 Plugin 'ervandew/supertab'
 Plugin 'garbas/vim-snipmate'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/syntastic'
 
 Plugin 'madx/vim-plugins'
@@ -38,6 +37,9 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'wavded/vim-stylus'
 Plugin 'digitaltoad/vim-jade'
 
+" Themes
+Plugin 'w0ng/vim-hybrid'
+
 call vundle#end()
 
 set shortmess+=I
@@ -46,7 +48,8 @@ filetype plugin indent on
 set ruler
 syntax on
 set background=dark
-colorscheme default
+let g:hybrid_use_Xresources = 1
+colorscheme hybrid
 let mapleader = ","
 set clipboard+=unnamedplus
 set showcmd
@@ -66,7 +69,7 @@ set expandtab
 set nowrap
 set smarttab
 
-set fillchars+=vert:\
+set fillchars+=vert:\ 
 
 " No backup/swap files
 set backupdir=
@@ -90,7 +93,7 @@ set wildignore+=public/images/**
 set wildignore+=.git,.svn
 
 " Default status line with padding
-set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\
+set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\ 
 
 " Nicer mouse editing
 set ve=block
@@ -155,6 +158,7 @@ noremap <C-J> J^
 noremap <C-K> kJ^
 noremap J 10j
 noremap K 10k
+nmap <silent> <leader># :b#<CR>
 
 " Block/Line selection with mouse
 noremap <M-LeftMouse> <4-LeftMouse>
@@ -245,11 +249,12 @@ com! Jshint call SetJSChecker('jshint')
 
 if has('gui_running')
   " colorscheme railscasts-custom
-  colorscheme jellybeans
+  colorscheme hybrid
   " set background=light
   set guioptions=aegict
   set guifont=Droid\ Sans\ Mono\ 10
   set listchars=nbsp:⋅,trail:⋅
+  set linespace=2
   if ! exists("g:startedonce")
     set columns=86
     set lines=32
