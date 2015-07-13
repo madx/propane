@@ -69,7 +69,7 @@ set expandtab
 set nowrap
 set smarttab
 
-set fillchars+=vert:\ 
+set fillchars=vert:\ ,fold:-
 
 " No backup/swap files
 set backupdir=
@@ -248,9 +248,6 @@ com! Jshint call SetJSChecker('jshint')
 "" GVIM
 
 if has('gui_running')
-  " colorscheme railscasts-custom
-  colorscheme hybrid
-  " set background=light
   set guioptions=aegict
   set guifont=Droid\ Sans\ Mono\ 10
   set listchars=nbsp:⋅,trail:⋅
@@ -262,3 +259,7 @@ if has('gui_running')
   endif
   autocmd GUIEnter * set novisualbell t_vb=
 endif
+
+" Fix theme
+hi clear VertSplit
+hi link VertSplit StatusLineNC
