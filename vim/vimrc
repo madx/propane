@@ -19,6 +19,8 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'ervandew/supertab'
 Plugin 'garbas/vim-snipmate'
 Plugin 'scrooloose/syntastic'
+Plugin 'junegunn/goyo.vim'
+Plugin 'junegunn/limelight.vim'
 
 Plugin 'madx/vim-plugins'
 
@@ -232,7 +234,7 @@ let g:markdown_fenced_languages = ['ruby', 'javascript', 'sh']
 
 " Syntastic
 let g:syntastic_enable_signs = 1
-let g:syntastic_javascript_checkers = ['eslint', 'jshint']
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_check_on_open = 1
