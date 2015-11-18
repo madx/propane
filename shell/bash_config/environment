@@ -35,13 +35,3 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 
 # Use NVM
 [ -r ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh
-
-# Activate vte.sh features
-if [ -r /etc/profile.d/vte.sh ]; then
-  . /etc/profile.d/vte.sh
-fi
-if ! which __vte_prompt_command >/dev/null 2>&1; then
-  function __vte_prompt_command() {
-    echo -n
-  }
-fi
