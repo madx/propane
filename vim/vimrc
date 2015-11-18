@@ -18,21 +18,11 @@ Plug 'scrooloose/syntastic'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
+" My own plugins
 Plug 'madx/vim-plugins'
 
 " Language support
-Plug 'evanmiller/nginx-vim-syntax'
-Plug 'kchmck/vim-coffee-script'
-Plug 'nono/vim-handlebars'
-Plug 'othree/html5-syntax.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'rainux/vim-vala'
-Plug 'slim-template/vim-slim'
-Plug 'tmatilai/vim-monit'
-Plug 'tpope/vim-markdown'
-Plug 'vim-ruby/vim-ruby'
-Plug 'wavded/vim-stylus'
-Plug 'digitaltoad/vim-jade'
+Plug 'sheerun/vim-polyglot'
 
 " Themes
 Plug 'w0ng/vim-hybrid'
