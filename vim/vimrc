@@ -2,19 +2,15 @@ set nocompatible
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
-Plug 'mileszs/ack.vim'
+Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'vim-scripts/Align'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'suan/vim-instant-markdown'
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
-Plug 'garbas/vim-snipmate'
 Plug 'scrooloose/syntastic'
+Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
@@ -31,7 +27,6 @@ call plug#end()
 
 set shortmess+=I
 
-filetype plugin indent on
 set ruler
 syntax on
 set background=dark
@@ -72,6 +67,10 @@ set smartcase
 
 " Mouse is fine
 set mouse=a
+set ttymouse=xterm2
+
+" Nicer mouse editing
+set virtualedit=block
 
 " Ignores
 set wildignore+=tmp/**
@@ -82,8 +81,10 @@ set wildignore+=.git,.svn
 " Default status line with padding
 set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\ 
 
-" Nicer mouse editing
-set ve=block
+" Cursor shape in terminal
+let &t_SI = "\<Esc>[6 q"
+let &t_SR = "\<Esc>[4 q"
+let &t_EI = "\<Esc>[2 q"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Numbering
@@ -117,25 +118,16 @@ nmap <Leader>aa :next<cr>
 nmap <Leader>aA :prev<cr>
 nmap <Leader>bb :bn<cr>
 nmap <Leader>bB :bp<cr>
+nmap <leader>b# :b#<cr>
 nmap <Leader>b<Space> :b#<cr>
 nmap <Leader>qq :cn<cr>zz
 nmap <Leader>qQ :cp<cr>zz
-
-" Tabular
-vmap <Leader>= :Tabularize /=<cr>
 
 " Conflict resolution
 nmap <Leader>in /^\(<<<<\\|====\\|>>>>\)<cr>
 nmap <Leader>ip ?^\(<<<<\\|====\\|>>>>\)<cr>
 
-" Search for word under cursor
-nmap <Leader>S yiw:Ack <C-R>"<cr>
-vmap <Leader>S :<C-W>Ack <C-R>*<cr>
-
-" Edit macros
-nmap <Leader>eri :call Inliner_RubyInlineVariable()<cr>
-nmap <Leader>erc :call Inliner_RubyInlineConditional()<cr>
-nmap <Leader>erx :silent !erx % &<cr>
+" Edit shortcuts
 map Q gq
 nnoremap < <<
 nnoremap > >>
@@ -145,22 +137,6 @@ noremap <C-J> J^
 noremap <C-K> kJ^
 noremap J 10j
 noremap K 10k
-nmap <silent> <leader># :b#<CR>
-
-" Block/Line selection with mouse
-noremap <M-LeftMouse> <4-LeftMouse>
-inoremap <M-LeftMouse> <4-LeftMouse>
-onoremap <M-LeftMouse> <C-C><4-LeftMouse>
-noremap <M-LeftDrag> <LeftDrag>
-inoremap <M-LeftDrag> <LeftDrag>
-onoremap <M-LeftDrag> <C-C><LeftDrag>
-
-noremap <S-LeftMouse> <3-LeftMouse>
-inoremap <S-LeftMouse> <3-LeftMouse>
-onoremap <S-LeftMouse> <C-C><3-LeftMouse>
-noremap <S-LeftDrag> <LeftDrag>
-inoremap <S-LeftDrag> <LeftDrag>
-onoremap <S-LeftDrag> <C-C><LeftDrag>
 
 " Easy window management
 nmap <silent> <leader>w<Space> :call WMFocusMasterWindow()<CR>
@@ -174,8 +150,10 @@ nmap <silent> <C-Down>         <C-w>j
 nmap <silent> <C-Up>           <C-w>k
 nmap <silent> <C-Right>        <C-w>l
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" EVENTS
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" MISC
@@ -188,36 +166,39 @@ map <F2> <Esc>:%s/\s\+$//<CR>
 com! Trim exe "%s/\\s\\+$//"
 com! Date exe "r!date +'date: \\%FT\\%R\\%:z'"
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" PLUGINS
 
-" Gist-Vim
-let s:gistrc = expand($HOME . ".vim/gist.vim")
-if filereadable(s:gistrc)
-  exec ":so " . s:gistrc
-endif
+"-------------------------------------------------------------------------------
+" Ag
+let g:ag_working_path_mode="r"
 
+" Search for word under cursor
+nmap <Leader>S yiw:Ag <C-R>"<cr>
+vmap <Leader>S :<C-W>Ag <C-R>*<cr>
+"-------------------------------------------------------------------------------
+
+"-------------------------------------------------------------------------------
 " CtrlP
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_map = ''
+
 nmap <Leader>oo :CtrlP<cr>
 nmap <Leader>of :CtrlPMixed<cr>
 nmap <Leader>ob :CtrlPBuffer<cr>
 nmap <Leader>or :CtrlPMRU<cr>
+"-------------------------------------------------------------------------------
 
-" Ack-Vim
-let g:ackprg="ag --nocolor --nogroup --column"
-
+"-------------------------------------------------------------------------------
 " Align
-nmap <Leader>Asym :Align! l:p0P1 :
-nmap <Leader>Astr :Align! l:p0P1 "
-nmap <Leader>A=   :Align! l:p0P1 =
+vmap <Leader>Asym :Align! l:p0P1 :
+vmap <Leader>Astr :Align! l:p0P1 "
+vmap <Leader>A=   :Align! l:p1P1 =
+"-------------------------------------------------------------------------------
 
-" Instant MarkDown
-let g:instant_markdown_autostart = 0
-let g:markdown_fenced_languages = ['ruby', 'javascript', 'sh']
-
+"-------------------------------------------------------------------------------
 " Syntastic
 let g:syntastic_enable_signs = 1
 let g:syntastic_javascript_checkers = ['eslint']
@@ -230,6 +211,8 @@ function! SetJSChecker(checker)
 endfunction
 com! Eslint call SetJSChecker('eslint')
 com! Jshint call SetJSChecker('jshint')
+"-------------------------------------------------------------------------------
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" GVIM
@@ -247,6 +230,6 @@ if has('gui_running')
   autocmd GUIEnter * set novisualbell t_vb=
 endif
 
-" Fix theme
+" Theme fix
 hi clear VertSplit
 hi link VertSplit StatusLineNC
