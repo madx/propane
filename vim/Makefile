@@ -6,9 +6,9 @@ VIMRC    = $(HOME)/.vimrc
 VIMDIR   = $(HOME)/.vim
 SPELL    = $(VIMDIR)/spell
 SNIPPETS = $(VIMDIR)/snippets
-VUNDLE   = $(VIMDIR)/bundle/vundle
+VIMPLUG   = $(VIMDIR)/autoload/plug.vim
 
-all: $(VIMRC) $(SPELL) $(SNIPPETS) vundle
+all: $(VIMRC) $(SPELL) $(SNIPPETS) vimplug
 
 $(VIMRC): vimrc
 	ln -s $(CURRENT_DIR)/vimrc $(VIMRC)
@@ -19,13 +19,13 @@ $(SPELL): spell | $(VIMDIR)
 $(SNIPPETS): spell | $(VIMDIR)
 	ln -s $(CURRENT_DIR)/snippets $(SNIPPETS)
 
-$(VUNDLE):
-	git clone https://github.com/gmarik/Vundle.vim.git $(VIMDIR)/bundle/Vundle.vim
+$(VIMPLUG):
+	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 $(VIMDIR):
 	mkdir -p $(VIMDIR)
 
-vundle: $(VUNDLE)
-	vim +BundleInstall +qall
+vimplug: $(VIMPLUG)
+	vim +PlugInstall +qall
 
 .PHONY: all vundle
