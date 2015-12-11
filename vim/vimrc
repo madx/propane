@@ -54,6 +54,7 @@ set smarttab
 set fillchars=vert:\┃,fold:-
 
 " No backup/swap files
+set nobackup
 set backupdir=
 set directory=
 set nowritebackup
@@ -87,6 +88,10 @@ set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\
 let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
+
+" Friendly netrw browsing
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Numbering
