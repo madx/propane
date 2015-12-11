@@ -51,7 +51,7 @@ set expandtab
 set nowrap
 set smarttab
 
-set fillchars=vert:\ ,fold:-
+set fillchars=vert:\┃,fold:-
 
 " No backup/swap files
 set backupdir=
@@ -60,14 +60,16 @@ set nowritebackup
 set noswapfile
 
 " Search
-" set hlsearch
+set nohlsearch
 set incsearch
 set ignorecase
 set smartcase
 
 " Mouse is fine
 set mouse=a
-set ttymouse=xterm2
+if !has("nvim")
+  set ttymouse=xterm2
+endif
 
 " Nicer mouse editing
 set virtualedit=block
@@ -229,7 +231,3 @@ if has('gui_running')
   endif
   autocmd GUIEnter * set novisualbell t_vb=
 endif
-
-" Theme fix
-hi clear VertSplit
-hi link VertSplit StatusLineNC
