@@ -35,3 +35,6 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 
 # Use NVM
 [ -r ~/.nvm/nvm.sh ] && . ~/.nvm/nvm.sh
+
+# Load local environment
+[ -r ~/.config/bash/environment.local ] && . ~/.config/bash/environment.local
