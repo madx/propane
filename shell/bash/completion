@@ -1,0 +1,3 @@
+#!/bin/bash
+
+[ -r $BASH_CONF_DIR/completion.local ] && . $BASH_CONF_DIR/completion.local

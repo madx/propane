@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function todo {
+  vim ~/.todos/$1.txt
+}
+
+function list-todo {
+  for i in ~/.todos/*; do echo $(basename $i | cut -f 1 -d '.') ":" $(wc -l < $i); done
+}
+
+function pidenv {
+  cat /proc/$1/environ | tr '\0' '\n'
+}
+
+[ -r $BASH_CONF_DIR/aliases.local ] && . $BASH_CONF_DIR/aliases.local

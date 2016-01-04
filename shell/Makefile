@@ -4,21 +4,17 @@ CURRENT_DIR = $(shell pwd)
 
 BASHRC      = $(HOME)/.bashrc
 INPUTRC     = $(HOME)/.inputrc
-PROMPT      = $(HOME)/.prompt
 BASH_CONFIG = $(HOME)/.config/bash
 
 all: $(BASHRC) $(INPUTRC) $(PROMPT) $(BASH_CONFIG)
 
 $(BASHRC): bashrc
-	ln -s $(CURRENT_DIR)/bashrc $(BASHRC)
+	ln -sfn $(CURRENT_DIR)/bashrc $(BASHRC)
 
 $(INPUTRC): inputrc
-	ln -s $(CURRENT_DIR)/inputrc $(INPUTRC)
+	ln -sfn $(CURRENT_DIR)/inputrc $(INPUTRC)
 
-$(PROMPT): prompt
-	ln -s $(CURRENT_DIR)/prompt $(PROMPT)
-
-$(BASH_CONFIG): bash_config
-	ln -s $(CURRENT_DIR)/bash_config $(BASH_CONFIG)
+$(BASH_CONFIG): bash
+	ln -sfn $(CURRENT_DIR)/bash $(BASH_CONFIG)
 
 .PHONY: all
