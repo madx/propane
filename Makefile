@@ -1,4 +1,4 @@
-all: shell git vim termite
+all: shell git vim
 
 shell:
 	make -C shell
@@ -9,7 +9,4 @@ git:
 vim:
 	make -C vim
 
-termite:
-	make -C termite
-
-.PHONY: all shell git vim termite
+.PHONY: all shell git vim
