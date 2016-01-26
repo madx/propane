@@ -11,9 +11,6 @@ export HISTSIZE=2000
 shopt -s histappend
 export PROMPT_COMMAND='history -a'
 
-# Couleur du prompt
-PC=31
-
 # Ajouter les binaires personnalisés
 if [ -d ~/bin ]; then
   export PATH=$PATH:$HOME/bin:$HOME/.local/bin
