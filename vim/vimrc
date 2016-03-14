@@ -236,3 +236,8 @@ if has('gui_running')
   endif
   autocmd GUIEnter * set novisualbell t_vb=
 endif
+
+let s:vimprojfile = findfile('.vimproject', '.;')
+if !empty(s:vimprojfile)
+  exec 'source '.fnameescape(s:vimprojfile)
+endif
