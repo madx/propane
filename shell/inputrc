@@ -1,4 +1,8 @@
-set show-all-if-ambiguous on
+set show-all-if-ambiguous off
+
+TAB: menu-complete
+"\eZ": menu-complete-backward
+"\C-n": complete
 
 "\eq": yank-last-arg
 "\eR": "tput resetOAOA"
