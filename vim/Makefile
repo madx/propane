@@ -25,7 +25,10 @@ $(VIMPLUG):
 $(VIMDIR):
 	mkdir -p $(VIMDIR)
 
-vimplug: $(VIMPLUG)
+vimplug: $(VIMPLUG) $(VIMDIR)/bundle
 	vim +PlugInstall +qall
+
+$(VIMDIR)/bundle:
+	mkdir $@
 
 .PHONY: all vundle
