@@ -14,10 +14,10 @@ $(VIMRC): vimrc
 	ln -s $(CURRENT_DIR)/vimrc $(VIMRC)
 
 $(SPELL): spell | $(VIMDIR)
-	ln -s $(CURRENT_DIR)/spell $(SPELL)
+	ln -sfn $(CURRENT_DIR)/spell $(SPELL)
 
 $(SNIPPETS): spell | $(VIMDIR)
-	ln -s $(CURRENT_DIR)/snippets $(SNIPPETS)
+	ln -sfn $(CURRENT_DIR)/snippets $(SNIPPETS)
 
 $(VIMPLUG):
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
