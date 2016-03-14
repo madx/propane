@@ -13,6 +13,7 @@ Plug 'scrooloose/syntastic'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'itchyny/lightline.vim'
 
 " My own plugins
 Plug 'madx/vim-plugins'
@@ -218,6 +219,15 @@ function! SetJSChecker(checker)
 endfunction
 com! Eslint call SetJSChecker('eslint')
 com! Jshint call SetJSChecker('jshint')
+"-------------------------------------------------------------------------------
+
+"-------------------------------------------------------------------------------
+" lightline.vim
+let g:lightline = {
+  \ 'colorscheme': 'jellybeans',
+  \ 'separator': { 'left': '', 'right': '' },
+  \ 'subseparator': { 'left': 'ັ', 'right': '' }
+\}
 "-------------------------------------------------------------------------------
 
 
