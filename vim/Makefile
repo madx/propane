@@ -6,9 +6,10 @@ VIMRC    = $(HOME)/.vimrc
 VIMDIR   = $(HOME)/.vim
 SPELL    = $(VIMDIR)/spell
 SNIPPETS = $(VIMDIR)/snippets
-VIMPLUG   = $(VIMDIR)/autoload/plug.vim
+VIMPLUG  = $(VIMDIR)/autoload/plug.vim
+NVIMDIR  = $(XDG_CONFIG_HOME)/nvim
 
-all: $(VIMRC) $(SPELL) $(SNIPPETS) vimplug
+all: $(VIMRC) $(SPELL) $(SNIPPETS) vimplug $(NVIMDIR)
 
 $(VIMRC): vimrc
 	ln -s $(CURRENT_DIR)/vimrc $(VIMRC)
@@ -30,5 +31,9 @@ vimplug: $(VIMPLUG) $(VIMDIR)/bundle
 
 $(VIMDIR)/bundle:
 	mkdir $@
+
+$(NVIMDIR):
+	ln -s ~/.vim $(XDG_CONFIG_HOME)/nvim
+	ln -s ~/.vimrc $(XDG_CONFIG_HOME)/nvim/init.vim
 
 .PHONY: all vundle
