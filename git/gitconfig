@@ -86,8 +86,8 @@
 [identity "github"]
   name = madx
   email = madx+github@yapok.org
-[identity "wyplay"]
-  name = "François Vaux"
-  email = fvaux@wyplay.com
 [diff]
   tool = gvimdiff
+[identity "eshard"]
+	name = François Vaux
+	email = francois.vaux@eshard.com
