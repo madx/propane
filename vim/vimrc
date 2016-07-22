@@ -225,6 +225,9 @@ com! Jshint call SetJSChecker('jshint')
 " lightline.vim
 let g:lightline = {
   \ 'colorscheme': 'jellybeans',
+  \ 'component': {
+  \   'filename': '%f'
+  \ },
   \ 'separator': { 'left': '', 'right': '' },
   \ 'subseparator': { 'left': 'ັ', 'right': '' }
 \}
