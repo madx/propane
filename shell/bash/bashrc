@@ -58,6 +58,6 @@ if [ -f $BASH_CONF_DIR/prompt ]; then
 fi
 
 if [ -f ~/.cache/last_working_directory ]; then
-  cd $(cat ~/.cache/last_working_directory)
+  cd "$(cat ~/.cache/last_working_directory)"
 fi
 
