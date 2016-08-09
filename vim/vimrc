@@ -99,10 +99,7 @@ let g:netrw_banner = 0
 
 set nonumber
 set norelativenumber
-" autocmd InsertEnter * :set relativenumber!
-" autocmd InsertLeave * :set relativenumber
 noremap <Leader>nn :set number! relativenumber!<cr>
-" noremap ,nN :set relativenumber<cr>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -255,6 +252,8 @@ if has('gui_running')
   autocmd GUIEnter * set novisualbell t_vb=
 endif
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Vim project files
 let s:vimprojfile = findfile('.vimproject', '.;')
 if !empty(s:vimprojfile)
   exec 'source '.fnameescape(s:vimprojfile)
