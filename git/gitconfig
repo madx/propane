@@ -1,7 +1,3 @@
-[user]
-  name = "François Vaux"
-  email = madx@yapok.org
-  identity = default
 [alias]
   ## Aliases
   # Commit
@@ -25,7 +21,7 @@
 
   # Inspection
   st = status -sb
-  hist = log --pretty=oneline --abbrev-commit --decorate
+  hist = log --pretty='tformat:%C(auto)%h %C(auto)%s%d%C(white)% an%Creset' --decorate
   ls = !git hist -5
   lsm = !git hist -10
   lsmm = !git hist -20
