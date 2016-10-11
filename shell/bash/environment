@@ -16,10 +16,10 @@ export EDITOR=vim
 export PAGER='less -R'
 
 # XDG directories
-export XDG_CONFIG_HOME="/home/madx/.config"
-export XDG_DATA_HOME="/home/madx/.local/share"
+export XDG_CONFIG_HOME="/home/$USER/.config"
+export XDG_DATA_HOME="/home/$USER/.local/share"
 export XDG_DATA_DIRS="/usr/local/share:/usr/share:$XDG_DATA_HOME"
-export XDG_CACHE_HOME="/home/madx/.cache"
+export XDG_CACHE_HOME="/home/$USER/.cache"
 
 # Manpages colors
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 2)
