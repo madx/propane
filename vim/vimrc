@@ -86,10 +86,10 @@ set wildignore+=.git,.svn
 " Default status line with padding
 set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\ 
 
-" Cursor shape in terminal
-let &t_SI = "\<Esc>[6 q"
-let &t_SR = "\<Esc>[4 q"
-let &t_EI = "\<Esc>[2 q"
+" Cursor shape in terminal (nvim only)
+if has("nvim")
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+endif
 
 " Friendly netrw browsing
 let g:netrw_liststyle = 3
