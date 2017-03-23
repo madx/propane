@@ -52,7 +52,7 @@ function _save_wd {
   pwd > ~/.cache/last_working_directory
 }
 
-export PS1='\[\e[G\e[1;30m\]$(__hbar)\[\e[0m\]\r\[\e[1;${PC}m\]$(__prompt_git_wd)\[\e[0m\]$(__prompt_git_branch)`if [ "$__RET" -ne "0" ]; then echo " \e[1;41;37m $__RET \e[0m"; fi` \n↳ '
+export PS1='\[\e[G\e[0;30m\]$(__hbar)\[\e[0m\]\r\[\e[1;${PC}m\]$(__prompt_git_wd)\[\e[0m\]$(__prompt_git_branch)`if [ "$__RET" -ne "0" ]; then echo " \e[1;41;37m $__RET \e[0m"; fi` \n↳ '
 
 case "$TERM" in
 xterm*|rxvt*|screen*|st*)
