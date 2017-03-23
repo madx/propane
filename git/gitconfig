@@ -85,5 +85,5 @@
 [diff]
   tool = gvimdiff
 [identity "eshard"]
-	name = François Vaux
+	name = "François Vaux"
 	email = francois.vaux@eshard.com
