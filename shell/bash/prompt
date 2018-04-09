@@ -40,6 +40,18 @@ function __prompt_git_wd {
   fi
 }
 
+function __prompt_docker_id {
+  if [ -f /.dockerenv ]; then
+    echo "[$(hostname)] "
+  fi
+}
+
+function __prompt_venv {
+  if [ x != "x$VIRTUAL_ENV" ]; then
+    echo " 🐍"
+  fi
+}
+
 function __printbar {
   eval printf '%.0s$2' {1..$1}
 }
@@ -52,11 +64,11 @@ function _save_wd {
   pwd > ~/.cache/last_working_directory
 }
 
-export PS1='\[\e[G\e[0;30m\]$(__hbar)\[\e[0m\]\r\[\e[1;${PC}m\]$(__prompt_git_wd)\[\e[0m\]$(__prompt_git_branch)`if [ "$__RET" -ne "0" ]; then echo " \e[1;41;37m $__RET \e[0m"; fi` \n↳ '
+export PS1='\[\e[G\e[0;30m\]$(__hbar)\[\e[0m\]\r$(__prompt_docker_id)\[\e[1;${PC}m\]$(__prompt_git_wd)\[\e[0m\]$(__prompt_git_branch)\[\e[0;32m\]$(__prompt_venv)\[\e[0m\]`if [ "$__RET" -ne "0" ]; then echo " \e[1;41;37m $__RET \e[0m"; fi` \n↳ '
 
 case "$TERM" in
 xterm*|rxvt*|screen*|st*)
-  PROMPT_COMMAND='__RET=$?;_COLS=`tput cols`;_save_wd;echo -ne "\033]0;$USER@$HOSTNAME: $(__prompt_git_wd)$(__prompt_git_branch)\007"'
+  PROMPT_COMMAND='__RET=$?;_COLS=`tput cols`;_save_wd;echo -ne "\033]0;$USER@$HOSTNAME: $(__prompt_docker_id)$(__prompt_git_wd)$(__prompt_git_branch)\007";history -a'
   ;;
 *)
   PROMPT_COMMAND='__RET=$?;history -a'

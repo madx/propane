@@ -1,5 +1,6 @@
 set show-all-if-ambiguous off
 
+"\e[P": delete-char
 TAB: menu-complete
 "\eZ": menu-complete-backward
 "\C-n": complete
