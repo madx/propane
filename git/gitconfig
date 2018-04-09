@@ -75,7 +75,7 @@
 [include]
   path = ~/.gitconfig.local
 [pull]
-  rebase = true
+  rebase = preserve
 [identity "default"]
   name = "François Vaux"
   email = madx@yapok.org
@@ -83,7 +83,13 @@
   name = madx
   email = madx+github@yapok.org
 [diff]
+  renames = true
   tool = gvimdiff
 [identity "eshard"]
-	name = "François Vaux"
-	email = francois.vaux@eshard.com
+  name = "François Vaux"
+  email = francois.vaux@eshard.com
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
