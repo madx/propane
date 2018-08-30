@@ -19,6 +19,9 @@ Go!
 ---
 
 ``` console
-$ git clone git@github.com:madx/propane.git Code/Repos/propane
-$ make
+$ git clone git@github.com:madx/propane.git ~/repos/propane
+$ cd ~/repos/propane
+$ TARGET=minimal make
+# OR
+$ TARGET=desktop make
 ```

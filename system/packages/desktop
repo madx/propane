@@ -1,0 +1,13 @@
+# Web browsers
+firefox
+firefox-i18n-fr
+chromium
+# Text editor
+neovim
+# Audio server and utilities
+pulseaudio
+ponymix
+pavucontrol
+# X11
+xorg
+xorg-apps

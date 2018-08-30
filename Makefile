@@ -1,12 +1,21 @@
-all: shell git vim
+include colors.make
+
+all: system shell git vim
+
+system:
+	@echo -e "$(_G)▸ installing base system$(_E)"
+	@make -C system
 
 shell:
-	make -C shell
+	@echo -e "$(_G)▸ configuring shell$(_E)"
+	@make -C shell
 
 git:
-	make -C git
+	@echo -e "$(_G)▸ configuring git$(_E)"
+	@make -C git
 
 vim:
-	make -C vim
+	@echo -e "$(_G)▸ configuring vim$(_E)"
+	@make -C vim
 
-.PHONY: all shell git vim
+.PHONY: all system shell git vim
