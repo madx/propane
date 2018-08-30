@@ -6,9 +6,10 @@ BASHRC      = $(HOME)/.bashrc
 PROFILE     = $(HOME)/.profile
 XPROFILE    = $(HOME)/.xprofile
 INPUTRC     = $(HOME)/.inputrc
-BASH_CONFIG = $(HOME)/.config/bash
+XDG_CONFIG_DIR = $(HOME)/.config
+BASH_CONFIG = $(XDG_CONFIG_DIR)/bash
 
-all: $(BASHRC) $(INPUTRC) $(PROMPT) $(BASH_CONFIG)
+all: $(BASHRC) $(PROFILE) $(XPROFILE) $(INPUTRC) $(PROMPT) $(BASH_CONFIG)
 
 $(BASHRC): bashrc
 	ln -sfn $(CURRENT_DIR)/bashrc $(BASHRC)
@@ -23,6 +24,7 @@ $(INPUTRC): inputrc
 	ln -sfn $(CURRENT_DIR)/inputrc $(INPUTRC)
 
 $(BASH_CONFIG): bash
+	mkdir -p $(XDG_CONFIG_DIR)
 	ln -sfn $(CURRENT_DIR)/bash $(BASH_CONFIG)
 
 .PHONY: all
