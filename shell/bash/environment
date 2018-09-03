@@ -8,9 +8,6 @@ umask 026
 # Prompt color
 PC=31
 
-# Add ~/bin to $PATH
-export PATH="$HOME/bin:./node_modules/.bin/:$HOME/.npm-packages/bin:$PATH"
-
 # Default programs and program options
 export EDITOR=vim
 export PAGER='less -R'
