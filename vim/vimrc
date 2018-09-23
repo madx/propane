@@ -218,11 +218,7 @@ vmap <Leader>A=   :Align! l:p1P1 =
 
 "-------------------------------------------------------------------------------
 " neomake
-if readfile('/sys/class/power_supply/ADP1/online') == ['0']
-  call neomake#configure#automake('w')
-else
-  call neomake#configure#automake('nrw')
-endif
+call neomake#configure#automake('nrw')
 "-------------------------------------------------------------------------------
 
 "-------------------------------------------------------------------------------
