@@ -262,3 +262,8 @@ let s:vimprojfile = findfile('.vimproject', '.;')
 if !empty(s:vimprojfile)
   exec 'source '.fnameescape(s:vimprojfile)
 endif
+
+let s:localvimrc = findfile('init.local.vim', '/home/madx/.config/nvim')
+if !empty(s:localvimrc)
+  exec 'source '.fnameescape(s:localvimrc)
+endif
