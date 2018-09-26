@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+DEBUG=${1:-""}
+
+BAT=BAT1
+IWIFACE=wlp3s0
+
+trap _restart USR1
+trap _set_status USR2
+
+_restart() {
+  notify-send -t 1000 "Reloading dwmstatus"
+  exec $0 $@
+}
+
+_volume() {
+  ponymix is-muted
+
+  if [ $? -eq 0 ]; then
+    echo "🔇 MUTE| "
+  else
+    local volume=$(ponymix get-volume)
+    echo "🔊 ${volume}%"
+  fi
+}
+
+_ifstatus() {
+  local ipaddr=$(ip addr | grep enp3s0: -A2 | tail -n1 | awk '{print $2}' | cut -d/ -f1)
+
+  echo -en "📶$ipaddr"
+}
+
+_date() {
+  date +"%F %R"
+}
+
+_recording() {
+  pidof byzanz-record >/dev/null
+  if [ $? -eq 0 ]; then
+    echo -n " |⏺ REC"
+  fi
+}
+
+_set_status() {
+  status="$(_volume) | $(_ifstatus)| $(_date)$(_recording)"
+  if [ -n "$DEBUG" ]; then
+    echo $status
+  else
+    xsetroot -name "$status"
+  fi
+}
+
+while true; do
+  _set_status
+  sleep 1
+done

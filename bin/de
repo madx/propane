@@ -1,0 +1,70 @@
+#!/bin/bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+prompt_command() {
+  list_commands | dmenu -b \
+    -z \
+    -p "> " \
+    -fn "Droid Sans Mono-10" \
+    -nb "#1d1f21" \
+    -nf "#c5c8c6" \
+    -sb "#19b59f" \
+    -sf "#ffffff" \
+    -w 3600 \
+    -h 24 \
+    -x 120 \
+    -y 100
+}
+
+list_commands() {
+  grep "^  [^)]\+) #:c" $0 |\
+    sed -e 's/^  \([^)]\+\).\+/\1/'
+}
+
+refresh_status() {
+  PID=$(ps fU madx | grep 'bash.*/[d]wmstatus' | sed -e 's/^ *\([0-9]\+\).*/\1/')
+  kill -USR2 $PID
+}
+
+command=${1:-$(prompt_command)}
+
+case "$command" in
+  suspend) #:c
+    systemctl suspend
+    ;;
+  volume+) #:c
+    ponymix increase 10
+    refresh_status
+    ;;
+  volume-) #:c
+    ponymix decrease 10
+    refresh_status
+    ;;
+  mute) #:c
+    ponymix toggle
+    refresh_status
+    ;;
+  ?volume) #:c
+    notify-send Volume "$(ponymix get-volume)"
+    ;;
+  brightness+) #:c
+    xbacklight -inc 10
+    ;;
+  brightness-) #:c
+    xbacklight -dec 10
+    ;;
+  brightness-max) #:c
+    xbacklight -set 100
+    ;;
+  brightness-half) #:c
+    xbacklight -set 50
+    ;;
+  brightness-min) #:c
+    xbacklight -set 20
+    ;;
+  ?brightness) #:c
+    notify-send Brightness "$(xbacklight -get | cut -d. -f1)"
+    ;;
+esac

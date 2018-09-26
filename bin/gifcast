@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Requirements:
+#   - byzanz-record to perform the actual screencast
+#   - xrectsel to be able to select which part of the screen you want to record
+
+FILE="$HOME/documents/videos/`date +%FT%T.gif`"
+ARGUMENTS=$(xrectsel "--x=%x --y=%y --width=%w --height=%h")
+
+byzanz-record --delay 0 $ARGUMENTS --exec "zenity --notification --listen" $FILE
+echo $FILE

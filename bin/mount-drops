@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+export SSH_AUTH_SOCK=/run/user/1000/ssh-agent.socket
+export SSH_ASKPASS=$HOME/bin/askpass
+sshfs garbu.re:sites/drops/ $HOME/drops/
+notify-send "mount-drops" "Drops folder mounted"

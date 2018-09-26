@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DROPS_DIR="${HOME}/drops"
+
+set +e
+mount | grep -q "${DROPS_DIR}"
+DROPS_MOUNTED=$?
+set -e
+if [ $DROPS_MOUNTED -ne 0 ]; then
+  notify-send Screenshot "Drops shared folder not mounted, attempting to mount"
+  mount-drops
+  exit 1
+fi
+
+FILE="$HOME/documents/screenshots/`date +%FT%T.png`"
+
+maim --select\
+  --highlight\
+  --tolerance 0\
+  --color 0.3,0.4,0.6,0.4\
+  "$FILE"
+
+updrop "$FILE"

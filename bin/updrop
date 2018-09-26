@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+DROP_DIR="${HOME}/drops"
+BASE_URL="http://drop.yapok.org"
+FILE=$1
+FILE_NAME="$(basename "$FILE")"
+TARGET="${DROP_DIR}/${FILE_NAME}"
+
+notify() {
+  local message="${1:-}"
+  notify-send --icon folder-remote "updrop" "$message"
+}
+
+if [ -f "${TARGET}" ]; then
+  notify "File already exists"
+else
+  cp  "$FILE" "$DROP_DIR"
+  echo -n "${BASE_URL}/${FILE_NAME}" | xsel -b
+  chmod go+r "${TARGET}"
+  notify "File URL copied to clipboard"
+fi

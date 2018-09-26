@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+PID=$(ps fU madx | grep 'bash.*/[d]wmstatus' | sed -e 's/^ *\([0-9]\+\).*/\1/')
+kill -USR1 $PID

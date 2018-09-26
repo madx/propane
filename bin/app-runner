@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Color palette: http://www.colourlovers.com/palette/3075110/Melting
+
+dmenu_run -b \
+  -p "> " \
+  -fn "Droid Sans Mono-10" \
+  -nb "#1d1f21" \
+  -nf "#c5c8c6" \
+  -sb "#19b59f" \
+  -sf "#ffffff" \
+  -dim 0.4 \
+  -w 3600 \
+  -h 24 \
+  -x 120 \
+  -y 100

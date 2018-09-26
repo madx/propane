@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+FILE_DIR=$HOME/documents/kdeconnect
+
+for PIC in $@; do
+  if expr match $PIC '^\(VID\|MUTE\)_' >/dev/null; then
+    cp $FILE_DIR/$PIC ~/drops/$PIC
+  else
+    convert $FILE_DIR/$PIC -resize 4016016@ ~/drops/$PIC
+  fi
+  chmod go+r ~/drops/$PIC
+
+  firefox --new-tab http://drop.yapok.org/$PIC
+done
