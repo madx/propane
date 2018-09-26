@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+compton &
+dwmstatus &
+dunst &
+feh --bg-center ~/documents/wallpapers/anton-van-der-weijst-570789-unsplash.jpg &
+
+exec /home/madx/bin/dwm 2>$HOME/.dwm.log

@@ -11,3 +11,11 @@ pavucontrol
 # X11
 xorg
 xorg-apps
+lxdm-gtk3
+# Desktop environment
+compton
+dunst
+feh
+# Fonts
+ttf-dejavu
+ttf-droid

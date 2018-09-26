@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=User X Session
+Comment=Run an user's .Xsession script
+TryExec=user-xsession
+Exec=user-xsession
+Type=Application

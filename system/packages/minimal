@@ -1,5 +1,10 @@
 # Text editor
 neovim
+# Web tools
+w3m
+wget
 # System tools
 sudo
 sshfs
+xdg-user-dirs
+the_silver_searcher

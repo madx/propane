@@ -4,7 +4,7 @@ all: system shell git vim
 
 system:
 	@echo -e "$(_G)▸ installing base system$(_E)"
-	@make -C system
+	@bash system/ignite.sh
 
 shell:
 	@echo -e "$(_G)▸ configuring shell$(_E)"
