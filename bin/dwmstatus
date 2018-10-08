@@ -14,7 +14,7 @@ _volume() {
   ponymix is-muted
 
   if [ $? -eq 0 ]; then
-    echo "🔇 MUTE| "
+    echo "🔇 MUTE"
   else
     local volume=$(ponymix get-volume)
     echo "🔊 ${volume}%"
@@ -22,7 +22,7 @@ _volume() {
 }
 
 _ifstatus() {
-  local ipaddr=$(ip addr | grep enp3s0: -A2 | tail -n1 | awk '{print $2}' | cut -d/ -f1)
+  local ipaddr=$(ip addr | grep $IFACE: -A2 | tail -n1 | awk '{print $2}' | cut -d/ -f1)
 
   echo -en "📶 $ipaddr"
 }
