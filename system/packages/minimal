@@ -8,3 +8,4 @@ sudo
 sshfs
 xdg-user-dirs
 the_silver_searcher
+bash-completion
