@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+HELPTEXT=$(grep "//?" /home/madx/repos/dwm/config.h | sed -e 's#^.*//? ##' -e 's/</\&lt;/' -e 's/>/\&gt;/' -e 's/^\([^:]\+\)/<b>\1<\/b>/' )
+
+notify-send dwm-help "$HELPTEXT"
