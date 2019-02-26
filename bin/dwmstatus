@@ -6,7 +6,7 @@ IFS=$'\n\t'
 DEBUG=${DEBUG:-""}
 
 BAT=BAT1
-IWIFACE=wlp3s0
+IFACE=wlp3s0
 DE_DATA_DIR="${XDG_DATA_HOME}/de"
 PID_FILE="$DE_DATA_DIR/dwmstatus.pid"
 
