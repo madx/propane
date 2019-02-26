@@ -2,5 +2,6 @@
 
 set -euo pipefail
 
-PID=$(ps fU madx | grep 'bash.*/[d]wmstatus' | sed -e 's/^ *\([0-9]\+\).*/\1/')
-kill -USR1 $PID
+SIG=${1:-USR1}
+
+kill -$SIG $(cat ~/.local/shrae/de/dwmstatus.pid)

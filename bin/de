@@ -24,8 +24,7 @@ list_commands() {
 }
 
 refresh_status() {
-  PID=$(ps fU madx | grep 'bash.*/[d]wmstatus' | sed -e 's/^ *\([0-9]\+\).*/\1/')
-  kill -USR2 $PID
+  dwmstatus refresh
 }
 
 command=${1:-$(prompt_command)}
@@ -36,18 +35,18 @@ case "$command" in
     ;;
   volume+) #:c
     ponymix increase 10
-    refresh_status
+    dwmstatus refresh
     ;;
   volume-) #:c
     ponymix decrease 10
-    refresh_status
+    dwmstatus refresh
     ;;
   mute) #:c
     ponymix toggle
-    refresh_status
+    dwmstatus refresh
     ;;
   ?volume) #:c
-    notify-send Volume "$(ponymix get-volume)"
+    notify-send --icon audio-volume-high Volume "$(ponymix get-volume)"
     ;;
   brightness+) #:c
     xbacklight -inc 10

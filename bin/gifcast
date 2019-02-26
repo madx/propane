@@ -4,8 +4,40 @@
 #   - byzanz-record to perform the actual screencast
 #   - xrectsel to be able to select which part of the screen you want to record
 
-FILE="$HOME/documents/videos/`date +%FT%T.gif`"
-ARGUMENTS=$(xrectsel "--x=%x --y=%y --width=%w --height=%h")
+set -euo pipefail
+IFS=$'\n\t'
 
-byzanz-record --delay 0 $ARGUMENTS --exec "zenity --notification --listen" $FILE
+PID_FILE="${XDG_DATA_HOME}/de/gifcast.pid"
+echo $$ > $PID_FILE
+dwmstatus refresh
+
+_cleanup() {
+  rm $PID_FILE
+  dwmstatus refresh
+}
+
+trap _cleanup EXIT
+
+FILE="$HOME/documents/videos/`date +%FT%T.gif`"
+
+set +e
+RECTANGLE=$(xrectsel "--x=%x --y=%y --width=%w --height=%h")
+echo "$RECTANGLE" | grep -v -q 'width=0 --height=0'
+HAS_AREA=$?
+set -e
+
+if [ $HAS_AREA -ne 0 ]; then
+  notify-send --urgency critical --expire-time 1000 "Canceled recording"
+  exit 1
+fi
+
+IFS=$' \n\t'
+byzanz-record \
+  --delay 0 \
+  --cursor \
+  $RECTANGLE \
+  --exec "zenity --notification --listen" \
+  $FILE
+IFS=$'\n\t'
+
 echo $FILE

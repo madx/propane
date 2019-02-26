@@ -9,7 +9,7 @@ mount | grep -q "${DROPS_DIR}"
 DROPS_MOUNTED=$?
 set -e
 if [ $? -ne 0 ]; then
-  notify-send Screenshot "Drops shared folder not mounted, attempting to mount"
+  notify-send --icon folder-remote "Drops shared folder not mounted, attempting to mount"
   mount-drops
   exit 1
 fi
