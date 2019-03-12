@@ -23,6 +23,7 @@ Plug 'madx/vim-plugins'
 " Language support
 Plug 'sheerun/vim-polyglot'
 Plug 'ElmCast/elm-vim'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
 " Themes
 Plug 'w0ng/vim-hybrid'
