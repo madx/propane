@@ -5,10 +5,17 @@ IFS=$'\n\t'
 
 DEBUG=${DEBUG:-""}
 
-BAT=BAT1
-IFACE=wlp3s0
+DE_CONFIG_DIR="${XDG_CONFIG_HOME}/de"
 DE_DATA_DIR="${XDG_DATA_HOME}/de"
+CONFIG_FILE="$DE_CONFIG_DIR/dwmstatus.config.sh"
 PID_FILE="$DE_DATA_DIR/dwmstatus.pid"
+
+BAT=DISABLED
+IFACE=DISABLED
+
+if [ -f "$CONFIG_FILE" ]; then
+  source "$CONFIG_FILE"
+fi
 
 _volume() {
   ponymix is-muted
@@ -17,18 +24,40 @@ _volume() {
     echo "🔇 MUTE"
   else
     local volume=$(ponymix get-volume)
-    echo "🔊 ${volume}%"
+    echo " 🔊 ${volume}%"
   fi
 }
 
 _ifstatus() {
+  if [ "$IFACE" = "DISABLED" ]; then
+    return
+  fi
+
   local ipaddr=$(ip addr | grep $IFACE: -A2 | tail -n1 | awk '{print $2}' | cut -d/ -f1)
 
-  echo -en "📶 $ipaddr"
+  echo -en "📶 $ipaddr | "
 }
 
 _date() {
   date +"%F %R"
+}
+
+_battery() {
+  if [ "$BAT" = "DISABLED" ]; then
+    return
+  fi
+
+  local battery_stat=$(acpi -b | grep "$BAT")
+  local percentage=$(echo $battery_stat | cut -d, -f2 | tr -d ' ')
+  local status=$(echo $battery_stat | cut -d, -f1 | cut -d: -f2 | tr -d ' ')
+  local indicator=""
+
+  case $status in
+    Charging) indicator="↑" ;;
+    Discharging) indicator="↓" ;;
+  esac
+
+  echo "$indicator$percentage | "
 }
 
 _recording() {
@@ -38,7 +67,7 @@ _recording() {
 }
 
 _set_status() {
-  status=" $(_volume) | $(_ifstatus) | $(_date)$(_recording)"
+  status="$(_volume) | $(_battery)$(_ifstatus)$(_date)$(_recording)"
   if [ -n "$DEBUG" ]; then
     echo "> update status"
     echo $status
@@ -51,6 +80,7 @@ _restart() {
   if [ -n "$DEBUG" ]; then
     echo "> restarting"
   fi
+
   notify-send --expire-time 1000 --icon system-run "Restarting dwmstatus"
   exec /home/madx/bin/dwmstatus $@
 }
@@ -59,6 +89,7 @@ _refresh() {
   if [ -n "$DEBUG" ]; then
     echo "> force refresh"
   fi
+
   _set_status
 }
 
