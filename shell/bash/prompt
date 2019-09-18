@@ -64,11 +64,19 @@ function _save_wd {
   pwd > ~/.cache/last_working_directory
 }
 
+function _save_venv {
+  if [ -n "$VIRTUAL_ENV" ]; then
+    echo "$VIRTUAL_ENV" > ~/.cache/last_venv
+  else
+    rm -f ~/.cache/last_venv
+  fi
+}
+
 export PS1='\[\e[G\e[0;30m\]$(__hbar)\[\e[0m\]\r$(__prompt_docker_id)\[\e[1;${PC}m\]$(__prompt_git_wd)\[\e[0m\]$(__prompt_git_branch)\[\e[0;32m\]$(__prompt_venv)\[\e[0m\]`if [ "$__RET" -ne "0" ]; then echo " \e[1;41;37m $__RET \e[0m"; fi` \n↳ '
 
 case "$TERM" in
 xterm*|rxvt*|screen*|st*)
-  PROMPT_COMMAND='__RET=$?;_COLS=`tput cols`;_save_wd;echo -ne "\033]0;$USER@$HOSTNAME: $(__prompt_docker_id)$(__prompt_git_wd)$(__prompt_git_branch)\007";history -a'
+  PROMPT_COMMAND='__RET=$?;_COLS=`tput cols`;_save_wd;_save_venv;echo -ne "\033]0;$USER@$HOSTNAME: $(__prompt_docker_id)$(__prompt_git_wd)$(__prompt_git_branch)\007";history -a'
   ;;
 *)
   PROMPT_COMMAND='__RET=$?;history -a'

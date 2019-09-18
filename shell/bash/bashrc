@@ -16,11 +16,6 @@ if [ -d ~/bin ]; then
   export PATH=$HOME/bin:$HOME/.local/bin:$PATH
 fi
 
-# Importer le fichier ~/.bashrc_local
-if [ -f $BASH_CONF_DIR/bashrc.local ]; then
-  . $BASH_CONF_DIR/bashrc.local
-fi
-
 # Vérifier la taille de la fenêtre après chaque commande et, si nécessaire,
 # mettre a jour les valeurs les LINES et COLUMNS
 shopt -s checkwinsize
@@ -59,5 +54,10 @@ fi
 
 if [ -f ~/.cache/last_working_directory ]; then
   cd "$(cat ~/.cache/last_working_directory)"
+fi
+
+# Importer le fichier ~/.bashrc_local
+if [ -f $BASH_CONF_DIR/bashrc.local ]; then
+  . $BASH_CONF_DIR/bashrc.local
 fi
 
