@@ -17,9 +17,11 @@ fi
 FILE="$HOME/documents/screenshots/`date +%FT%T.png`"
 
 maim --select\
+  --hidecursor\
   --highlight\
   --tolerance 0\
   --color 0.3,0.4,0.6,0.4\
   "$FILE"
+  #--delay 5\
 
 updrop "$FILE"

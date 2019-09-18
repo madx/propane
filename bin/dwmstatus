@@ -12,6 +12,7 @@ PID_FILE="$DE_DATA_DIR/dwmstatus.pid"
 
 BAT=DISABLED
 IFACE=DISABLED
+ROOT_VOLUME=DISABLED
 
 if [ -f "$CONFIG_FILE" ]; then
   source "$CONFIG_FILE"
@@ -36,6 +37,22 @@ _ifstatus() {
   local ipaddr=$(ip addr | grep $IFACE: -A2 | tail -n1 | awk '{print $2}' | cut -d/ -f1)
 
   echo -en "📶 $ipaddr | "
+}
+
+_diskspace() {
+  if [ "$ROOT_VOLUME" = "DISABLED" ]; then
+    return
+  fi
+
+  local diskspace=$(df -h | tr -s ' ' | grep $ROOT_VOLUME | cut -d ' ' -f 5)
+  local percentage="${diskspace%%%}"
+  local color=""
+
+  if [ $percentage -gt 80 ]; then
+    color=""
+  fi
+
+  echo -en "⛂ ${color}${diskspace} | "
 }
 
 _date() {
@@ -67,7 +84,7 @@ _recording() {
 }
 
 _set_status() {
-  status="$(_volume) | $(_battery)$(_ifstatus)$(_date)$(_recording)"
+  status="$(_volume) | $(_battery)$(_ifstatus)$(_diskspace)$(_date)$(_recording)"
   if [ -n "$DEBUG" ]; then
     echo "> update status"
     echo $status
