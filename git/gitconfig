@@ -75,7 +75,7 @@
 [include]
   path = ~/.gitconfig.local
 [pull]
-  rebase = preserve
+  rebase = merges
 [identity "default"]
   name = "François Vaux"
   email = madx@yapok.org
