@@ -169,6 +169,16 @@ nmap <silent> <C-Down>         <C-w>j
 nmap <silent> <C-Up>           <C-w>k
 nmap <silent> <C-Right>        <C-w>l
 
+" Todolists
+nmap <Leader>d "=strftime("%F")<CR>Pa
+
+nmap <Leader>td ^r✔ddGpw,d <Esc>''
+nmap <Leader>tu ^r+
+nmap <Leader>tn ^r-
+nmap <Leader>tc ^r=
+nmap <Leader>tt o-<Space>
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" MISC
