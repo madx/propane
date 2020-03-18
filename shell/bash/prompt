@@ -57,7 +57,7 @@ function __printbar {
 }
 
 function __hbar {
-  __printbar $(tput cols) ─
+  __printbar $(tput cols) " "
 }
 
 function _save_wd {
