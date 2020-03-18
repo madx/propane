@@ -58,7 +58,12 @@ set expandtab
 set nowrap
 set smarttab
 
+set list
+set listchars=nbsp:␣,trail:⋅
 set fillchars=vert:\┃,fold:-
+
+hi! SpecialKey ctermfg=243 guifg=#707880
+
 
 " No backup/swap files
 set nobackup
