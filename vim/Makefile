@@ -10,16 +10,13 @@ VIMPLUG  = $(VIMDIR)/autoload/plug.vim
 NVIMDIR  = $(XDG_CONFIG_HOME)/nvim
 NVIMRC   = $(NVIMDIR)/init.vim
 
-all: $(VIMRC) $(SPELL) $(SNIPPETS) vimplug $(NVIMDIR)
+all: $(VIMRC) $(SPELL) vimplug $(NVIMDIR)
 
 $(VIMRC): vimrc
 	ln -s $(CURRENT_DIR)/vimrc $(VIMRC)
 
 $(SPELL): spell | $(VIMDIR)
 	ln -sfn $(CURRENT_DIR)/spell $(SPELL)
-
-$(SNIPPETS): spell | $(VIMDIR)
-	ln -sfn $(CURRENT_DIR)/snippets $(SNIPPETS)
 
 $(VIMPLUG):
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
