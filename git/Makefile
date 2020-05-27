@@ -7,6 +7,6 @@ GITCONFIG = $(HOME)/.gitconfig
 all: $(GITCONFIG)
 
 $(GITCONFIG): gitconfig
-	ln -s $(CURRENT_DIR)/gitconfig $(GITCONFIG)
+	ln -sfn $(CURRENT_DIR)/gitconfig $(GITCONFIG)
 
 .PHONY: all
