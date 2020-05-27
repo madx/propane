@@ -51,13 +51,13 @@ case "$command" in
     xbacklight -dec 10
     ;;
   brightness-max) #:c
-    xbacklight -set 100
+    intelbacklight -set 937
     ;;
   brightness-half) #:c
-    xbacklight -set 50
+    intelbacklight -set 300
     ;;
   brightness-min) #:c
-    xbacklight -set 20
+    intelbacklight -set 1
     ;;
   ?brightness) #:c
     notify-send Brightness "$(xbacklight -get | cut -d. -f1)"

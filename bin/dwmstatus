@@ -64,7 +64,7 @@ _battery() {
     return
   fi
 
-  local battery_stat=$(acpi -b | grep "$BAT")
+  local battery_stat=$(acpi -b | fgrep -v 'information unavailable')
   local percentage=$(echo $battery_stat | cut -d, -f2 | tr -d ' ')
   local status=$(echo $battery_stat | cut -d, -f1 | cut -d: -f2 | tr -d ' ')
   local indicator=""
