@@ -8,14 +8,19 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
 Plug 'tomtom/tcomment_vim'
 Plug 'Raimondi/delimitMate'
-Plug 'ervandew/supertab'
-" Plug 'scrooloose/syntastic'
 Plug 'sbdchd/neoformat'
 Plug 'neomake/neomake'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'itchyny/lightline.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-buffer.vim'
+Plug 'prabirshrestha/asyncomplete-emoji.vim'
 
 " My own plugins
 Plug 'madx/vim-plugins'
@@ -31,6 +36,8 @@ Plug 'w0ng/vim-hybrid'
 call plug#end()
 
 set shortmess+=I
+
+'
 
 set ruler
 syntax on
@@ -225,10 +232,10 @@ nmap <Leader>or :CtrlPMRU<cr>
 "-------------------------------------------------------------------------------
 
 "-------------------------------------------------------------------------------
-" Align
-vmap <Leader>Asym :Align! l:p0P1 :
-vmap <Leader>Astr :Align! l:p0P1 "
-vmap <Leader>A=   :Align! l:p1P1 =
+" EasyAlign
+vmap <Enter> <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
 "-------------------------------------------------------------------------------
 
 "-------------------------------------------------------------------------------
@@ -254,21 +261,56 @@ let g:lightline = {
 let g:polyglot_disabled = ['elm']
 "-------------------------------------------------------------------------------
 
+"-------------------------------------------------------------------------------
+" vim-lsp
+"-------------------------------------------------------------------------------
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> <f2> <plug>(lsp-rename)
+    " refer to doc to add more commands
+endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" GVIM
-if has('gui_running')
-  set guioptions=aegict
-  set guifont=Droid\ Sans\ Mono\ 10
-  set listchars=nbsp:⋅,trail:⋅
-  set linespace=2
-  if ! exists("g:startedonce")
-    set columns=86
-    set lines=32
-    let g:startedonce = 1
-  endif
-  autocmd GUIEnter * set novisualbell t_vb=
-endif
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+let g:lsp_signs_error = {"text": "🔴"}
+let g:lsp_signs_warning = {"text": "🔸"}
+let g:lsp_signs_hint = {"text": "🔹"}
+
+let g:lsp_settings_filetype_javascript = ['eslint-language-server']
+
+"-------------------------------------------------------------------------------
+" asyncomplete
+"-------------------------------------------------------------------------------
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+imap <c-space> <Plug>(asyncomplete_force_refresh)
+" allow modifying the completeopt variable, or it will
+" be overridden all the time
+let g:asyncomplete_auto_completeopt = 0
+set completeopt=menuone,noinsert,noselect,preview
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'whitelist': ['*'],
+    \ 'blacklist': ['go'],
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ 'config': {
+    \    'max_buffer_size': 5000000,
+    \  },
+    \ }))
+
+au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#emoji#get_source_options({
+    \ 'name': 'emoji',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#emoji#completor'),
+    \ }))
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
