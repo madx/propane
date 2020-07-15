@@ -13,7 +13,7 @@ NVIMRC   = $(NVIMDIR)/init.vim
 all: $(VIMRC) $(SPELL) vimplug $(NVIMDIR)
 
 $(VIMRC): vimrc
-	ln -s $(CURRENT_DIR)/vimrc $(VIMRC)
+	ln -sfn $(CURRENT_DIR)/vimrc $(VIMRC)
 
 $(SPELL): spell | $(VIMDIR)
 	ln -sfn $(CURRENT_DIR)/spell $(SPELL)

@@ -93,3 +93,6 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
+[identity "wpm"]
+	name = François Vaux
+	email = francois@wepaintminis.com

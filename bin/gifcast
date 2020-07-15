@@ -9,11 +9,11 @@ IFS=$'\n\t'
 
 PID_FILE="${XDG_DATA_HOME}/de/gifcast.pid"
 echo $$ > $PID_FILE
-dwmstatus refresh
+#dwmstatus refresh
 
 _cleanup() {
   rm $PID_FILE
-  dwmstatus refresh
+  #dwmstatus refresh
 }
 
 trap _cleanup EXIT
