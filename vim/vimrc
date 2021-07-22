@@ -2,6 +2,12 @@ set nocompatible
 
 call plug#begin('~/.vim/bundle')
 
+"-------------------------------------------------------------------------------
+" Polyglot
+"-------------------------------------------------------------------------------
+let g:polyglot_disabled = ['elm']
+"-------------------------------------------------------------------------------
+
 Plug 'mileszs/ack.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'editorconfig/editorconfig-vim'
@@ -186,7 +192,8 @@ nmap <silent> <C-Right>        <C-w>l
 " Todolists
 nmap <Leader>d "=strftime("%F")<CR>Pa
 
-nmap <Leader>td ^r✔ddGpw,d <Esc>''
+" td: done, tu: urgent, tn: normal, tc: category, tt: new item
+nmap <Leader>td ^r✔yy)Pw<Leader>d <Esc>''"_dd
 nmap <Leader>tu ^r+
 nmap <Leader>tn ^r-
 nmap <Leader>tc ^r=
@@ -258,11 +265,12 @@ let g:lightline = {
 \}
 "-------------------------------------------------------------------------------
 
+
+
 "-------------------------------------------------------------------------------
-" Polyglot
+" Completion/YCM
 "-------------------------------------------------------------------------------
-let g:polyglot_disabled = ['elm']
-"-------------------------------------------------------------------------------
+set completeopt=menuone
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
