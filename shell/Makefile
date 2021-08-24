@@ -2,12 +2,13 @@
 
 CURRENT_DIR = $(shell pwd)
 
-BASHRC      = $(HOME)/.bashrc
-PROFILE     = $(HOME)/.profile
-XPROFILE    = $(HOME)/.xprofile
-INPUTRC     = $(HOME)/.inputrc
+BASHRC         = $(HOME)/.bashrc
+PROFILE        = $(HOME)/.profile
+BASH_PROFILE   = $(HOME)/.bash_profile
+XPROFILE       = $(HOME)/.xprofile
+INPUTRC        = $(HOME)/.inputrc
 XDG_CONFIG_DIR = $(HOME)/.config
-BASH_CONFIG = $(XDG_CONFIG_DIR)/bash
+BASH_CONFIG    = $(XDG_CONFIG_DIR)/bash
 
 all: $(BASHRC) $(PROFILE) $(XPROFILE) $(INPUTRC) $(PROMPT) $(BASH_CONFIG)
 
@@ -16,6 +17,9 @@ $(BASHRC): bashrc
 
 $(PROFILE): profile
 	ln -sfn $(CURRENT_DIR)/profile $(PROFILE)
+
+$(BASH_PROFILE): bash_profile
+	ln -sfn $(CURRENT_DIR)/bash_profile $(BASH_PROFILE)
 
 $(XPROFILE): xprofile
 	ln -sfn $(CURRENT_DIR)/xprofile $(XPROFILE)

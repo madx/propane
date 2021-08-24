@@ -3,5 +3,4 @@
 # Ne rien faire s'il n'est pas lancé de façon interactive
 [ -z "$PS1" ] && return
 
-. ~/.config/bash/bashrc
-
+. $XDG_CONFIG_HOME/bash/bashrc

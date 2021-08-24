@@ -10,13 +10,14 @@ function __prompt_git_sha1 {
 }
 
 function __prompt_git_branch {
-  str="$(/usr/lib/git-core/git-symbolic-ref HEAD 2>/dev/null)"
+  str="$(git symbolic-ref HEAD 2>/dev/null)"
   if [ $? = 0 ]; then
     echo " ${str#refs/heads/}$(__prompt_git_dirty):$(__prompt_git_sha1)"
   fi
 }
 
 function __prompt_git_wd {
+  local HOMES_DIR="$(dirname $HOME)"
   gitdir="$(git rev-parse --git-dir 2>/dev/null)"
 
   if [ $? = 0 ]; then
@@ -36,7 +37,7 @@ function __prompt_git_wd {
       fi
     fi
   else
-    pwd | sed "s/\/home\//\~/"
+    pwd | sed "s/^\\${HOMES_DIR}\//\~/"
   fi
 }
 
@@ -61,14 +62,14 @@ function __hbar {
 }
 
 function _save_wd {
-  pwd > ~/.cache/last_working_directory
+  pwd > $XDG_CACHE_HOME/last_working_directory
 }
 
 function _save_venv {
   if [ -n "$VIRTUAL_ENV" ]; then
-    echo "$VIRTUAL_ENV" > ~/.cache/last_venv
+    echo "$VIRTUAL_ENV" > $XDG_CACHE_HOME/last_venv
   else
-    rm -f ~/.cache/last_venv
+    rm -f $XDG_CACHE_HOME/last_venv
   fi
 }
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export BASH_CONF_DIR=~/.config/bash/
+export BASH_CONF_DIR=$XDG_CONFIG_HOME/bash/
 
 . $BASH_CONF_DIR/environment
 
@@ -12,8 +12,11 @@ shopt -s histappend
 export PROMPT_COMMAND='history -a'
 
 # Ajouter les binaires personnalisés
-if [ -d ~/bin ]; then
-  export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+if [ -d $HOME/bin ]; then
+  export PATH=$HOME/bin:$PATH
+fi
+if [ -d $XDG_DATA_HOME/bin ]; then
+  export PATH=$XDG_DATA_HOME/bin:$PATH
 fi
 
 # Vérifier la taille de la fenêtre après chaque commande et, si nécessaire,
@@ -32,6 +35,9 @@ fi
 if [ -r /usr/share/bash-completion/bash_completion ]; then
   . /usr/share/bash-completion/bash_completion
 fi
+if [ -r /usr/local/etc/profile.d/bash_completion.sh ]; then
+  . /usr/local/etc/profile.d/bash_completion.sh
+fi
 
 if [ -f $BASH_CONF_DIR/completion ]; then
   . $BASH_CONF_DIR/completion
@@ -39,7 +45,7 @@ fi
 
 # Ajouter le support de la couleur à la commande ls, + quelques alias utiles
 if [ "$TERM" != "dumb" ]; then
-  eval "`TERM=xterm-256color dircolors -b`"
+  # eval "`TERM=xterm-256color dircolors -b`"
   alias ls='ls --color=auto'
   alias dir='ls --format=vertical'
   alias la='ls -Al'
@@ -52,8 +58,8 @@ if [ -f $BASH_CONF_DIR/prompt ]; then
   . $BASH_CONF_DIR/prompt
 fi
 
-if [ -f ~/.cache/last_working_directory ]; then
-  cd "$(cat ~/.cache/last_working_directory)"
+if [ -f $XDG_CACHE_HOME/last_working_directory ]; then
+  cd "$(cat $XDG_CACHE_HOME/last_working_directory)"
 fi
 
 # Importer le fichier ~/.bashrc_local
