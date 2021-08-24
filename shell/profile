@@ -2,6 +2,13 @@
 # ~/.profile
 #
 
+# XDG directories
+export XDG_CONFIG_HOME="/home/$USER/.config"
+export XDG_DATA_HOME="/home/$USER/.local/share"
+export XDG_DATA_DIRS="/usr/local/share:/usr/share:$XDG_DATA_HOME"
+export XDG_CACHE_HOME="/home/$USER/.cache"
+
+# Local overrides
 [[ -f ~/.profile.local ]] && . ~/.profile.local
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
