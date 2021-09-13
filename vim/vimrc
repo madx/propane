@@ -1,89 +1,51 @@
 set nocompatible
 
-call plug#begin('~/.vim/bundle')
+" Packages
+call micropack#init('~/.vim/pack/madx', [
+  \ 'https://github.com/mileszs/ack.vim',
+  \ 'https://github.com/ctrlpvim/ctrlp.vim',
+  \ 'https://github.com/tpope/vim-surround',
+  \ 'https://github.com/tomtom/tcomment_vim',
+  \ 'https://github.com/Raimondi/delimitMate',
+  \ 'https://github.com/editorconfig/editorconfig-vim',
+  \ 'https://github.com/chriskempson/base16-vim',
+  \ 'https://github.com/sbdchd/neoformat',
+  \ 'https://github.com/neomake/neomake',
+  \ 'https://github.com/junegunn/vim-easy-align',
+  \ 'https://github.com/junegunn/goyo.vim',
+  \ 'https://github.com/itchyny/lightline.vim',
+  \ 'https://github.com/sheerun/vim-polyglot',
+  \ 'https://github.com/prabirshrestha/vim-lsp',
+  \ 'https://github.com/mattn/vim-lsp-settings',
+  \ 'https://github.com/madx/vim-plugins',
+\ ])
 
-"-------------------------------------------------------------------------------
-" Polyglot
-"-------------------------------------------------------------------------------
-let g:polyglot_disabled = ['elm']
-"-------------------------------------------------------------------------------
+" UI
+syntax on                " Enable syntax highlighting
+colorscheme base16-chalk " Set color scheme
+set shortmess+=I         " Hide intro message
+set ruler                " Show line an column position
+set showcmd              " Show current command
+set laststatus=2         " Always show the status line
+let mapleader = ','      " Set , as the Leader key
+set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\
 
-Plug 'mileszs/ack.vim'
-Plug 'kien/ctrlp.vim'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'tpope/vim-surround'
-Plug 'tomtom/tcomment_vim'
-Plug 'Raimondi/delimitMate'
-Plug 'sbdchd/neoformat'
-Plug 'neomake/neomake'
-Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'ycm-core/YouCompleteMe'
-Plug 'chrisbra/Colorizer'
-
-" My own plugins
-Plug 'madx/vim-plugins'
-
-" Language support
-Plug 'sheerun/vim-polyglot'
-Plug 'ElmCast/elm-vim'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'pantharshit00/vim-prisma'
-
-" Themes
-Plug 'w0ng/vim-hybrid'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'chriskempson/base16-vim'
-
-call plug#end()
-
-
-" No intro message
-set shortmess+=I
+set hidden       " Do not unload abandonned buffesr
+set nojoinspaces " Do not insert two spaces after punctuation
+set splitbelow
+set splitright
 
 if (has("termguicolors"))
   set termguicolors
 endif
 
-set ruler
-syntax on
-set background=dark
-colorscheme base16-chalk
-hi Normal guibg=NONE ctermbg=NONE
-let mapleader = ","
-set clipboard+=unnamedplus
-set showcmd
-set hidden
-set nojoinspaces
-set laststatus=2
-
-set splitbelow
-set splitright
-
-set spelllang=fr
+let &t_SI .= "\e[5 q" " Blinking bar in insert mode
+let &t_EI .= "\e[2 q" " Solid block elsewhere
 
 " Whitespace
-set ai
-set si
-set so=5
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set nowrap
-set smarttab
-
-set list
-set listchars=nbsp:␣,trail:⋅
-set fillchars=vert:\┃,fold:-
-
-hi! SpecialKey ctermfg=243 guifg=#707880
-
-
-" No backup/swap files
-set nobackup
-set backupdir=
+set autoindent
+set smartindent
+set scrolloff=5  " Keep 5 lines above or below current one when going near buffer edges
 set directory=
 set nowritebackup
 set noswapfile
@@ -110,28 +72,12 @@ set wildignore+=public/images/*
 set wildignore+=.git/*
 set wildignore+=.svn/*
 
-" Default status line with padding
-set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\
-
-" Cursor shape in terminal (nvim only)
-if has("nvim")
-  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-endif
-
 " Friendly netrw browsing
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Numbering
-
-set nonumber
-set norelativenumber
-noremap <Leader>nn :set number! relativenumber!<cr>
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" CUSTOM MAPPINGS
+"" Custom Mappings
 
 nnoremap <Space> .
 nnoremap ' `
@@ -147,26 +93,26 @@ nmap <Leader>c gcc
 vmap <Leader>c gc
 
 " File navigation
-nmap <Leader>aa :next<cr>
+nmap <Leader>aa :next<crt
 nmap <Leader>aA :prev<cr>
-nmap <Leader>bb :bn<cr>
-nmap <Leader>bB :bp<cr>
-nmap <leader>b# :b#<cr>
-nmap <Leader>b<Space> :b#<cr>
+
+" Buffer navigation
+nmap <Leader>bb :bnext<cr>
+nmap <Leader>bB :bprevious<cr>
 
 " Quickfix navigation
-nmap <Leader>qq :cn<cr>zz
-nmap <Leader>qQ :cp<cr>zz
+nmap <Leader>qq :cnext<cr>zz
+nmap <Leader>qQ :cprevious<cr>zz
 
 " Location navigation
-nmap <Leader>ll :lne<cr>zz
-nmap <Leader>lL :lp<cr>zz
+nmap <Leader>ll :lnext<cr>zz
+nmap <Leader>lL :lprevious<cr>zz
 
 " Conflict resolution
 nmap <Leader>in /^\(<<<<\\|====\\|>>>>\)<cr>
 nmap <Leader>ip ?^\(<<<<\\|====\\|>>>>\)<cr>
 
-" Edit shortcuts
+" Formatting edit shortcuts
 map Q gq
 nnoremap < <<
 nnoremap > >>
@@ -189,17 +135,16 @@ nmap <silent> <C-Down>         <C-w>j
 nmap <silent> <C-Up>           <C-w>k
 nmap <silent> <C-Right>        <C-w>l
 
-" Todolists
+" Insert current date
 nmap <Leader>d "=strftime("%F")<CR>Pa
 
+" Todo management:
 " td: done, tu: urgent, tn: normal, tc: category, tt: new item
 nmap <Leader>td ^r✔yy)Pw<Leader>d <Esc>''"_dd
 nmap <Leader>tu ^r+
 nmap <Leader>tn ^r-
 nmap <Leader>tc ^r=
 nmap <Leader>tt o-<Space>
-
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" MISC
@@ -212,12 +157,11 @@ map <F2> <Esc>:%s/\s\+$//<CR>
 com! Trim exe "%s/\\s\\+$//"
 com! Date exe "r!date +'date: \\%FT\\%R\\%:z'"
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" PLUGINS
 
 "-------------------------------------------------------------------------------
-" Ack with ag
+" ack.vim
 let g:ackprg = 'ag --vimgrep --smart-case'
 cnoreabbrev ag Ack
 cnoreabbrev aG Ack
@@ -227,10 +171,9 @@ cnoreabbrev AG Ack
 " Search for word under cursor
 nmap <Leader>S yiw:Ag <C-R>"<cr>
 vmap <Leader>S :<C-W>Ag <C-R>*<cr>
-"-------------------------------------------------------------------------------
 
 "-------------------------------------------------------------------------------
-" CtrlP
+"  ctrlp.vim
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g "" --path-to-ignore ~/.agignore'
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_map = ''
@@ -239,7 +182,6 @@ nmap <Leader>oo :CtrlP<cr>
 nmap <Leader>of :CtrlPMixed<cr>
 nmap <Leader>ob :CtrlPBuffer<cr>
 nmap <Leader>or :CtrlPMRU<cr>
-"-------------------------------------------------------------------------------
 
 "-------------------------------------------------------------------------------
 " EasyAlign
@@ -247,40 +189,49 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 "-------------------------------------------------------------------------------
-
-"-------------------------------------------------------------------------------
 " neomake
-call neomake#configure#automake('nrw')
-"-------------------------------------------------------------------------------
+autocmd VimEnter * call neomake#configure#automake('nrw')
 
 "-------------------------------------------------------------------------------
 " lightline.vim
 let g:lightline = {
-  \ 'colorscheme': 'jellybeans',
+  \ 'colorscheme': 'deus',
   \ 'component': {
   \   'filename': '%f'
   \ },
   \ 'separator': { 'left': '', 'right': '' },
   \ 'subseparator': { 'left': '', 'right': '' }
 \}
-"-------------------------------------------------------------------------------
-
-
 
 "-------------------------------------------------------------------------------
-" Completion/YCM
-"-------------------------------------------------------------------------------
-set completeopt=menuone
+" vim-lsp
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> <Leader>gd <plug>(lsp-definition)
+    nmap <buffer> <Leader>gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> <Leader>gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> <Leader>gf <plug>(lsp-references)
+    nmap <buffer> <Leader>gi <plug>(lsp-implementation)
+    nmap <buffer> <Leader>gt <plug>(lsp-type-definition)
+    nmap <buffer> <Leader>gR <plug>(lsp-rename)
+    nmap <buffer> <Leader>gn <plug>(lsp-previous-diagnostic)
+    nmap <buffer> <Leader>gp <plug>(lsp-next-diagnostic)
+    nmap <buffer> <Leader>gg <plug>(lsp-hover)
+    inoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    inoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
+    let g:lsp_format_sync_timeout = 1000
+endfunction
+
+augroup lsp_install
+    au!
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Vim project files
+"" VIM PROJECT FILES
 let s:vimprojfile = findfile('.vimproject', '.;')
 if !empty(s:vimprojfile)
   exec 'source '.fnameescape(s:vimprojfile)
-endif
-
-let s:localvimrc = findfile('init.local.vim', '/home/madx/.config/nvim')
-if !empty(s:localvimrc)
-  exec 'source '.fnameescape(s:localvimrc)
 endif
