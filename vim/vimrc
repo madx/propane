@@ -17,18 +17,24 @@ call micropack#init('~/.vim/pack/madx', [
   \ 'https://github.com/sheerun/vim-polyglot',
   \ 'https://github.com/prabirshrestha/vim-lsp',
   \ 'https://github.com/mattn/vim-lsp-settings',
+  \ 'https://github.com/prabirshrestha/asyncomplete.vim',
+  \ 'https://github.com/prabirshrestha/asyncomplete-lsp.vim',
+  \ 'https://github.com/prabirshrestha/asyncomplete-buffer.vim',
+  \ 'https://github.com/prabirshrestha/asyncomplete-file.vim',
   \ 'https://github.com/madx/vim-plugins',
 \ ])
 
 " UI
 syntax on                " Enable syntax highlighting
-colorscheme base16-chalk " Set color scheme
 set shortmess+=I         " Hide intro message
 set ruler                " Show line an column position
 set showcmd              " Show current command
 set laststatus=2         " Always show the status line
 let mapleader = ','      " Set , as the Leader key
 set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\
+set signcolumn=number
+set number
+set nowrap
 
 set hidden       " Do not unload abandonned buffesr
 set nojoinspaces " Do not insert two spaces after punctuation
@@ -36,8 +42,10 @@ set splitbelow
 set splitright
 
 if (has("termguicolors"))
-  set termguicolors
+  set termguicolors      " 24-bit color support in terminal
 endif
+colorscheme base16-chalk " Set color scheme
+highlight! link LineNr Comment
 
 let &t_SI .= "\e[5 q" " Blinking bar in insert mode
 let &t_EI .= "\e[2 q" " Solid block elsewhere
@@ -46,6 +54,19 @@ let &t_EI .= "\e[2 q" " Solid block elsewhere
 set autoindent
 set smartindent
 set scrolloff=5  " Keep 5 lines above or below current one when going near buffer edges
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set nowrap
+set smarttab
+
+set list
+set listchars=nbsp:␣,trail:⋅
+set fillchars=vert:\┃,fold:-
+
+" No backup/swap files
+set nobackup
+set backupdir=
 set directory=
 set nowritebackup
 set noswapfile
@@ -61,8 +82,6 @@ set mouse=a
 if !has("nvim")
   set ttymouse=xterm2
 endif
-
-" Nicer mouse editing
 set virtualedit=block
 
 " Ignores
@@ -222,12 +241,27 @@ function! s:on_lsp_buffer_enabled() abort
     inoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
     let g:lsp_format_sync_timeout = 1000
+    let g:lsp_diagnostics_enabled = 0 " Let Neomake handle diagnostics
 endfunction
 
 augroup lsp_install
     au!
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+"-------------------------------------------------------------------------------
+" asyncomplete.vim
+function! s:prev_is_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>prev_is_space() ? "\<Tab>" :
+  \ asyncomplete#force_refresh()
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" VIM PROJECT FILES
