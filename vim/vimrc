@@ -80,7 +80,7 @@ set smartcase
 " Mouse is fine
 set mouse=a
 if !has("nvim")
-  set ttymouse=xterm2
+  set ttymouse=sgr
 endif
 set virtualedit=block
 
