@@ -2,19 +2,19 @@ set nocompatible
 
 " Packages
 call micropack#init('~/.vim/pack/madx', [
+  \ 'https://github.com/sheerun/vim-polyglot',
+  \ 'https://github.com/sainnhe/sonokai',
   \ 'https://github.com/mileszs/ack.vim',
   \ 'https://github.com/ctrlpvim/ctrlp.vim',
   \ 'https://github.com/tpope/vim-surround',
   \ 'https://github.com/tomtom/tcomment_vim',
   \ 'https://github.com/Raimondi/delimitMate',
   \ 'https://github.com/editorconfig/editorconfig-vim',
-  \ 'https://github.com/chriskempson/base16-vim',
   \ 'https://github.com/sbdchd/neoformat',
   \ 'https://github.com/neomake/neomake',
   \ 'https://github.com/junegunn/vim-easy-align',
   \ 'https://github.com/junegunn/goyo.vim',
   \ 'https://github.com/itchyny/lightline.vim',
-  \ 'https://github.com/sheerun/vim-polyglot',
   \ 'https://github.com/madx/vim-plugins',
   \ 'https://github.com/prabirshrestha/vim-lsp',
   \ 'https://github.com/mattn/vim-lsp-settings',
@@ -27,7 +27,7 @@ call micropack#init('~/.vim/pack/madx', [
 " UI
 syntax on                " Enable syntax highlighting
 set shortmess+=I         " Hide intro message
-set ruler                " Show line an column position
+set ruler                " Show line and column position
 set showcmd              " Show current command
 set laststatus=2         " Always show the status line
 let mapleader = ','      " Set , as the Leader key
@@ -36,7 +36,7 @@ set signcolumn=number
 set number
 set nowrap
 
-set hidden       " Do not unload abandonned buffesr
+set hidden       " Do not unload abandoned buffers
 set nojoinspaces " Do not insert two spaces after punctuation
 set splitbelow
 set splitright
@@ -44,12 +44,32 @@ set splitright
 if (has("termguicolors"))
   set termguicolors      " 24-bit color support in terminal
 endif
-colorscheme base16-chalk " Set color scheme
+let g:sonokai_style = 'andromeda'
+let g:sonokai_enable_italic = 0
+let g:sonokai_disable_italic_comment = 0
+let g:sonokai_transparent_background = 1
+packadd! sonokai
+colorscheme sonokai " Set color scheme
 highlight! link LineNr Comment
 highlight! SpellBad   guifg=#202020 guibg=#fb9fb1
 highlight! SpellLocal guifg=#202020 guibg=#12cfc0
 highlight! SpellCap   guifg=#202020 guibg=#6fc2ef
 highlight! SpellRare  guifg=#202020 guibg=#e1a3ee
+
+function! s:sonokai_custom() abort
+  let s:configuration = sonokai#get_configuration()
+  let s:palette = sonokai#get_palette(s:configuration.style)
+
+  call sonokai#highlight('VertSplit', s:palette.bg0, s:palette.none)
+  call sonokai#highlight('LineNr', s:palette.bg4, s:palette.none)
+endfunction
+
+augroup SonokaiCustom
+  autocmd!
+  autocmd ColorScheme sonokai call s:sonokai_custom()
+augroup END
+
+colorscheme sonokai
 
 let &t_SI .= "\e[5 q" " Blinking bar in insert mode
 let &t_EI .= "\e[2 q" " Solid block elsewhere
@@ -159,7 +179,7 @@ nmap <silent> <C-Up>           <C-w>k
 nmap <silent> <C-Right>        <C-w>l
 
 " Insert current date
-nmap <Leader>d "=strftime("%F")<CR>Pa
+nmap <Leader>d "=strftime("%F")<CR>pa
 
 " Todo management:
 " td: done, tu: urgent, tn: normal, tc: category, tt: new item
@@ -168,7 +188,6 @@ nmap <Leader>tu ^r+
 nmap <Leader>tn ^r-
 nmap <Leader>tc ^r=
 nmap <Leader>tt o-<Space>
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" MISC
 
@@ -185,7 +204,7 @@ com! Date exe "r!date +'date: \\%FT\\%R\\%:z'"
 
 "-------------------------------------------------------------------------------
 " ack.vim
-let g:ackprg = 'ag --vimgrep --smart-case'
+let g:ackprg = 'rg --vimgrep --smart-case'
 cnoreabbrev ag Ack
 cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
@@ -197,7 +216,7 @@ vmap <Leader>S :<C-W>Ag <C-R>*<cr>
 
 "-------------------------------------------------------------------------------
 "  ctrlp.vim
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g "" --path-to-ignore ~/.agignore'
+let g:ctrlp_user_command = 'rg %s --files --glob "" --color never'
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_map = ''
 
@@ -218,9 +237,20 @@ autocmd VimEnter * call neomake#configure#automake('nrw')
 "-------------------------------------------------------------------------------
 " lightline.vim
 let g:lightline = {
-  \ 'colorscheme': 'deus',
+  \ 'colorscheme': 'sonokai',
   \ 'component': {
-  \   'filename': '%f'
+  \   'filename': '%<%f',
+  \   'modified': '%{&modified?"🟡":""}'
+  \ },
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ],
+  \             [ 'filename' ] ],
+  \   'right': [ [ 'lineinfo' ],
+  \              [ 'readonly', 'modified' ] ]
+  \ },
+  \ 'inactive': {
+  \   'left': [ [ 'relativepath' ] ],
+  \   'right': [ [ 'lineinfo' ], ['modified'] ]
   \ },
   \ 'separator': { 'left': '', 'right': '' },
   \ 'subseparator': { 'left': '', 'right': '' }
