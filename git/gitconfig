@@ -72,8 +72,16 @@
   autosquash = true
 [core]
   whitespace = trailing-space,space-before-tab,tab-in-indent
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  line-numbers = true
 [include]
   path = ~/.gitconfig.local
+[merge]
+  conflictstyle=diff3
 [pull]
   rebase = merges
 [rerere]
@@ -88,6 +96,7 @@
   email = madx+github@yapok.org
 [diff]
   renames = true
+  colorMoved = default
 [identity "eshard"]
   name = "François Vaux"
   email = francois.vaux@eshard.com
