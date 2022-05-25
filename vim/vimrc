@@ -2,26 +2,27 @@ set nocompatible
 
 " Packages
 call micropack#init('~/.vim/pack/madx', [
-  \ 'https://github.com/sheerun/vim-polyglot',
+  \ 'https://github.com/nvim-lua/plenary.nvim',
+  \ 'https://github.com/nvim-treesitter/nvim-treesitter',
+  \ 'https://github.com/neovim/nvim-lspconfig',
+  \ 'https://github.com/williamboman/nvim-lsp-installer',
+  \ 'https://github.com/jose-elias-alvarez/null-ls.nvim',
+  \ 'https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils',
+  \ 'https://github.com/hrsh7th/cmp-nvim-lsp',
+  \ 'https://github.com/hrsh7th/cmp-buffer',
+  \ 'https://github.com/hrsh7th/cmp-path',
+  \ 'https://github.com/hrsh7th/cmp-cmdline',
+  \ 'https://github.com/hrsh7th/nvim-cmp',
+  \ 'https://github.com/folke/trouble.nvim',
   \ 'https://github.com/sainnhe/sonokai',
-  \ 'https://github.com/mileszs/ack.vim',
-  \ 'https://github.com/ctrlpvim/ctrlp.vim',
+  \ 'https://github.com/sheerun/vim-polyglot',
   \ 'https://github.com/tpope/vim-surround',
   \ 'https://github.com/tomtom/tcomment_vim',
   \ 'https://github.com/Raimondi/delimitMate',
-  \ 'https://github.com/editorconfig/editorconfig-vim',
-  \ 'https://github.com/sbdchd/neoformat',
-  \ 'https://github.com/neomake/neomake',
   \ 'https://github.com/junegunn/vim-easy-align',
-  \ 'https://github.com/junegunn/goyo.vim',
+  \ 'https://github.com/junegunn/fzf.vim',
   \ 'https://github.com/itchyny/lightline.vim',
   \ 'https://github.com/madx/vim-plugins',
-  \ 'https://github.com/prabirshrestha/vim-lsp',
-  \ 'https://github.com/mattn/vim-lsp-settings',
-  \ 'https://github.com/prabirshrestha/asyncomplete.vim',
-  \ 'https://github.com/prabirshrestha/asyncomplete-lsp.vim',
-  \ 'https://github.com/prabirshrestha/asyncomplete-buffer.vim',
-  \ 'https://github.com/prabirshrestha/asyncomplete-file.vim',
 \ ])
 
 " UI
@@ -45,23 +46,17 @@ if (has("termguicolors"))
   set termguicolors      " 24-bit color support in terminal
 endif
 let g:sonokai_style = 'andromeda'
+let g:sonokai_better_performance = 1
 let g:sonokai_enable_italic = 0
 let g:sonokai_disable_italic_comment = 0
 let g:sonokai_transparent_background = 1
-packadd! sonokai
-colorscheme sonokai " Set color scheme
-highlight! link LineNr Comment
-highlight! SpellBad   guifg=#202020 guibg=#fb9fb1
-highlight! SpellLocal guifg=#202020 guibg=#12cfc0
-highlight! SpellCap   guifg=#202020 guibg=#6fc2ef
-highlight! SpellRare  guifg=#202020 guibg=#e1a3ee
 
 function! s:sonokai_custom() abort
   let s:configuration = sonokai#get_configuration()
-  let s:palette = sonokai#get_palette(s:configuration.style)
+  let s:palette = sonokai#get_palette(s:configuration.style, s:configuration.colors_override)
 
   call sonokai#highlight('VertSplit', s:palette.bg0, s:palette.none)
-  call sonokai#highlight('LineNr', s:palette.bg4, s:palette.none)
+  call sonokai#highlight('LineNr', s:palette.bg3, s:palette.none)
 endfunction
 
 augroup SonokaiCustom
@@ -69,7 +64,7 @@ augroup SonokaiCustom
   autocmd ColorScheme sonokai call s:sonokai_custom()
 augroup END
 
-colorscheme sonokai
+colorscheme sonokai " Set color scheme
 
 let &t_SI .= "\e[5 q" " Blinking bar in insert mode
 let &t_EI .= "\e[2 q" " Solid block elsewhere
@@ -114,10 +109,12 @@ set wildignore+=app/assets/images/*
 set wildignore+=public/images/*
 set wildignore+=.git/*
 set wildignore+=.svn/*
+" set wildignore+=node_modules/*
 
 " Friendly netrw browsing
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
+let g:netrw_list_hide=netrw_gitignore#Hide()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Custom Mappings
@@ -127,9 +124,9 @@ nnoremap ' `
 nnoremap ` '
 
 " Copy/paste
-vnoremap <Leader>C "*y
-vnoremap <Leader>X "*d
-noremap  <Leader>V "*p
+vnoremap <Leader>C "+y
+vnoremap <Leader>X "+d
+noremap  <Leader>V "+p
 
 " Commenting
 nmap <Leader>c gcc
@@ -210,20 +207,18 @@ cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
 cnoreabbrev AG Ack
 
-" Search for word under cursor
-nmap <Leader>S yiw:Ag <C-R>"<cr>
-vmap <Leader>S :<C-W>Ag <C-R>*<cr>
 
 "-------------------------------------------------------------------------------
-"  ctrlp.vim
-let g:ctrlp_user_command = 'rg %s --files --glob "" --color never'
-let g:ctrlp_clear_cache_on_exit = 1
-let g:ctrlp_map = ''
-
-nmap <Leader>oo :CtrlP<cr>
-nmap <Leader>of :CtrlPMixed<cr>
-nmap <Leader>ob :CtrlPBuffer<cr>
-nmap <Leader>or :CtrlPMRU<cr>
+"  fzf.vim
+let g:fzf_preview_window = ["up:40%", "ctrl-/"]
+let g:fzf_buffers_jump = 1
+nmap <Leader>oo :Files!<cr>
+nmap <Leader>os :Rg!<cr>
+nmap <Leader>or :History!<cr>
+nmap <Leader>ob :Buffers<cr>
+" Search for word under cursor
+nmap <Leader>S yiw:Rg <C-R>"<cr>
+vmap <Leader>S y:Rg <C-R>"<cr>
 
 "-------------------------------------------------------------------------------
 " EasyAlign
@@ -232,7 +227,7 @@ nmap ga <Plug>(EasyAlign)
 
 "-------------------------------------------------------------------------------
 " neomake
-autocmd VimEnter * call neomake#configure#automake('nrw')
+" autocmd VimEnter * call neomake#configure#automake('nrw')
 
 "-------------------------------------------------------------------------------
 " lightline.vim
@@ -252,52 +247,15 @@ let g:lightline = {
   \   'left': [ [ 'relativepath' ] ],
   \   'right': [ [ 'lineinfo' ], ['modified'] ]
   \ },
-  \ 'separator': { 'left': '', 'right': '' },
-  \ 'subseparator': { 'left': '', 'right': '' }
+  \ 'separator': { 'left': '', 'right': '' },
+  \ 'subseparator': { 'left': '', 'right': '' }
 \}
 
-"-------------------------------------------------------------------------------
-" vim-lsp
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> <Leader>g<Space> <plug>(lsp-code-action)
-    nmap <buffer> <Leader>gd <plug>(lsp-definition)
-    nmap <buffer> <Leader>gs <plug>(lsp-document-symbol-search)
-    nmap <buffer> <Leader>gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> <Leader>gf <plug>(lsp-references)
-    nmap <buffer> <Leader>gi <plug>(lsp-implementation)
-    nmap <buffer> <Leader>gt <plug>(lsp-type-definition)
-    nmap <buffer> <Leader>gR <plug>(lsp-rename)
-    nmap <buffer> <Leader>gp <plug>(lsp-previous-diagnostic)
-    nmap <buffer> <Leader>gn <plug>(lsp-next-diagnostic)
-    nmap <buffer> <Leader>gg <plug>(lsp-hover)
-    inoremap <buffer> <expr><c-f> lsp#scroll(+4)
-    inoremap <buffer> <expr><c-d> lsp#scroll(-4)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Lua configuration
 
-    let g:lsp_format_sync_timeout = 1000
-    let g:lsp_diagnostics_enabled = 0 " Let Neomake handle diagnostics
-    let g:lsp_diagnostics_signs_enabled = 0 " Disable signs
-endfunction
+lua require("config")
 
-augroup lsp_install
-    au!
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
-
-"-------------------------------------------------------------------------------
-" asyncomplete.vim
-function! s:prev_is_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>prev_is_space() ? "\<Tab>" :
-  \ asyncomplete#force_refresh()
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" VIM PROJECT FILES

@@ -1,16 +1,17 @@
-# Install Vim distribution
+# Install Neovim distribution
 
 CURRENT_DIR = $(shell pwd)
 
-VIMRC    = $(HOME)/.vimrc
-VIMDIR   = $(HOME)/.vim
-SPELL    = $(VIMDIR)/spell
-SNIPPETS = $(VIMDIR)/snippets
-VIMPLUG  = $(VIMDIR)/autoload/plug.vim
-NVIMDIR  = $(XDG_CONFIG_HOME)/nvim
-NVIMRC   = $(NVIMDIR)/init.vim
+VIMRC      = $(HOME)/.vimrc
+VIMDIR     = $(HOME)/.vim
+SPELL      = $(VIMDIR)/spell
+SNIPPETS   = $(VIMDIR)/snippets
+MICROPACK  = $(VIMDIR)/autoload/micropack.vim
+NVIMDIR    = $(XDG_CONFIG_HOME)/nvim
+NVIMRC     = $(NVIMDIR)/init.vim
+NVIMLUADIR = $(NVIMDIR)/lua
 
-all: $(VIMRC) $(SPELL) vimplug $(NVIMDIR)
+all: $(VIMRC) $(SPELL) $(NVIMDIR) $(NVIMLUADIR)
 
 $(VIMRC): vimrc
 	ln -sfn $(CURRENT_DIR)/vimrc $(VIMRC)
@@ -18,20 +19,17 @@ $(VIMRC): vimrc
 $(SPELL): spell | $(VIMDIR)
 	ln -sfn $(CURRENT_DIR)/spell $(SPELL)
 
-$(VIMPLUG):
-	curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+$(MICROPACK):
+	curl -fLo $@ --create-dirs https://raw.githubusercontent.com/madx/micropack.vim/master/micropack.vim
 
 $(VIMDIR):
 	mkdir -p $(VIMDIR)
 
-vimplug: $(VIMPLUG) $(VIMDIR)/bundle
-	vim +PlugInstall +qall
-
-$(VIMDIR)/bundle:
-	mkdir $@
-
 $(NVIMDIR):
 	ln -s $(VIMDIR) $(NVIMDIR)
 	ln -s $(VIMRC) $(NVIMRC)
+
+$(NVIMLUADIR):
+	ln -sfn $(CURRENT_DIR)/lua $(NVIMLUADIR)
 
 .PHONY: all vundle
