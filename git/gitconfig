@@ -110,3 +110,6 @@
   email = francois@wepaintminis.com
 [init]
   defaultBranch = main
+[identity "akeneo"]
+	name = François Vaux
+	email = francois.vaux@akeneo.com
