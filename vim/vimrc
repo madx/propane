@@ -23,6 +23,7 @@ call micropack#init('~/.vim/pack/madx', [
   \ 'https://github.com/junegunn/fzf.vim',
   \ 'https://github.com/itchyny/lightline.vim',
   \ 'https://github.com/madx/vim-plugins',
+  \ 'https://github.com/github/copilot.vim',
 \ ])
 
 " UI
@@ -212,9 +213,9 @@ cnoreabbrev AG Ack
 "  fzf.vim
 let g:fzf_preview_window = ["up:40%", "ctrl-/"]
 let g:fzf_buffers_jump = 1
-nmap <Leader>oo :Files!<cr>
-nmap <Leader>os :Rg!<cr>
-nmap <Leader>or :History!<cr>
+nmap <Leader>oo :Files<cr>
+nmap <Leader>os :Rg<cr>
+nmap <Leader>or :History<cr>
 nmap <Leader>ob :Buffers<cr>
 " Search for word under cursor
 nmap <Leader>S yiw:Rg <C-R>"<cr>
