@@ -23,6 +23,8 @@ call micropack#init('~/.vim/pack/madx', [
   \ 'https://github.com/junegunn/fzf.vim',
   \ 'https://github.com/itchyny/lightline.vim',
   \ 'https://github.com/madx/vim-plugins',
+  \ 'https://github.com/L3MON4D3/LuaSnip',
+  \ 'https://github.com/saadparwaiz1/cmp_luasnip',
   \ 'https://github.com/github/copilot.vim',
 \ ])
 
@@ -229,6 +231,11 @@ nmap ga <Plug>(EasyAlign)
 "-------------------------------------------------------------------------------
 " neomake
 " autocmd VimEnter * call neomake#configure#automake('nrw')
+
+"-------------------------------------------------------------------------------
+" Copilot
+imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
 
 "-------------------------------------------------------------------------------
 " lightline.vim
