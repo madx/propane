@@ -13,6 +13,22 @@ local has_words_before = function()
 end
 
 --------------------------------------------------------------------------------
+-- Trouble
+require("trouble").setup {
+  icons = false,
+  fold_open = "v",
+  fold_closed = ">",
+  indent_lines = false,
+  signs = {
+    error = "error",
+    warning = "warn",
+    hint = "hint",
+    information = "info"
+  },
+  use_diagnostic_signs = false
+}
+
+--------------------------------------------------------------------------------
 -- Automatic LSP server installs
 local lspconfig = require("lspconfig")
 
@@ -29,6 +45,12 @@ require('nvim-treesitter.configs').setup {
     additional_vim_regex_highlighting = false,
   },
   indent = {
+    enable = true,
+  },
+  autotag = {
+    enable = true,
+  },
+  context_commentstring = {
     enable = true,
   },
 }
@@ -72,7 +94,7 @@ cmp.setup({
     { name = 'buffer' },
     { name = 'luasnip' },
     { name = 'path' },
-    { name = 'cmdline' },
+    -- { name = 'cmdline' },
   }),
   snippet = {
     expand = function(args)
@@ -109,13 +131,9 @@ local on_attach = function(client, bufnr)
   buf_map(bufnr, "n", "<Leader>g<space>", ":LspCodeAction<CR>")
   buf_map(bufnr, "n", "<Leader>gl", ":LspDiagLine<CR>")
   buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>")
-
-  if client.resolved_capabilities.document_formatting then
-    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
-  end
 end
 
-for _, lspserver in ipairs({ "intelephense", "tailwindcss", "vimls" }) do
+for _, lspserver in ipairs({ "intelephense", "tailwindcss", "vimls", "cssls" }) do
   lspconfig[lspserver].setup {
     capabilities = capabilities,
     on_attach = on_attach,
@@ -125,8 +143,8 @@ end
 lspconfig.tsserver.setup({
   capabilities = capabilities,
   on_attach = function(client, bufnr)
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
 
     local ts_utils = require("nvim-lsp-ts-utils")
     ts_utils.setup({})
@@ -153,28 +171,38 @@ lspconfig.sumneko_lua.setup({
 local null_ls = require("null-ls")
 null_ls.setup({
   sources = {
-    -- null_ls.builtins.diagnostics.eslint_d,
-    -- null_ls.builtins.code_actions.eslint_d,
+    null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.code_actions.eslint_d,
+    -- null_ls.builtins.formatting.eslint_d,
     null_ls.builtins.formatting.prettierd,
   },
   on_attach = function()
-    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+    vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.format()")
   end
 })
 
+--------------------------------------------------------------------------------
+-- pears
+require("pears").setup()
 
 --------------------------------------------------------------------------------
--- Trouble
-require("trouble").setup {
-  icons = false,
-  fold_open = "v",
-  fold_closed = ">",
-  indent_lines = false,
-  signs = {
-    error = "error",
-    warning = "warn",
-    hint = "hint",
-    information = "info"
+-- gitsigns
+require("gitsigns").setup({
+  current_line_blame = true,
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol',
+    delay = 200,
+    ignore_whitespace = false,
   },
-  use_diagnostic_signs = false
-}
+  current_line_blame_formatter = '-- <author> - <author_time:%Y-%m-%d> - <summary>',
+
+})
+
+--------------------------------------------------------------------------------
+-- nvim-treesitter-context
+require('treesitter-context').setup({
+  enable = true,
+  max_lines = 0,
+  trim_scope = 'outer'
+})

@@ -18,14 +18,19 @@ call micropack#init('~/.vim/pack/madx', [
   \ 'https://github.com/sheerun/vim-polyglot',
   \ 'https://github.com/tpope/vim-surround',
   \ 'https://github.com/tomtom/tcomment_vim',
-  \ 'https://github.com/Raimondi/delimitMate',
   \ 'https://github.com/junegunn/vim-easy-align',
   \ 'https://github.com/junegunn/fzf.vim',
   \ 'https://github.com/itchyny/lightline.vim',
   \ 'https://github.com/madx/vim-plugins',
   \ 'https://github.com/L3MON4D3/LuaSnip',
   \ 'https://github.com/saadparwaiz1/cmp_luasnip',
-  \ 'https://github.com/github/copilot.vim',
+  \ 'https://github.com/windwp/nvim-ts-autotag',
+  \ 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring',
+  \ 'https://github.com/nvim-treesitter/nvim-treesitter-context',
+  \ 'https://github.com/nacro90/numb.nvim',
+  \ 'https://github.com/steelsojka/pears.nvim',
+  \ 'https://github.com/lewis6991/gitsigns.nvim',
+  \ 'https://github.com/weebcyberpunk/lf.vim'
 \ ])
 
 " UI
@@ -36,10 +41,10 @@ set showcmd              " Show current command
 set laststatus=2         " Always show the status line
 let mapleader = ','      " Set , as the Leader key
 set statusline=\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\
-set signcolumn=number
+set signcolumn=yes:1
+set relativenumber
 set number
 set nowrap
-
 set hidden       " Do not unload abandoned buffers
 set nojoinspaces " Do not insert two spaces after punctuation
 set splitbelow
@@ -120,6 +125,11 @@ let g:netrw_banner = 0
 let g:netrw_list_hide=netrw_gitignore#Hide()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Abbreviations
+abbreviate cosnt const
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Custom Mappings
 
 nnoremap <Space> .
@@ -136,7 +146,7 @@ nmap <Leader>c gcc
 vmap <Leader>c gc
 
 " File navigation
-nmap <Leader>aa :next<crt
+nmap <Leader>aa :next<cr>
 nmap <Leader>aA :prev<cr>
 
 " Buffer navigation
@@ -179,7 +189,8 @@ nmap <silent> <C-Up>           <C-w>k
 nmap <silent> <C-Right>        <C-w>l
 
 " Insert current date
-nmap <Leader>d "=strftime("%F")<CR>pa
+nmap <Leader>d "=strftime("%F")<CR>Pa
+nmap <Leader>u "=system("uuid v4")<CR>Pa
 
 " Todo management:
 " td: done, tu: urgent, tn: normal, tc: category, tt: new item
@@ -188,6 +199,7 @@ nmap <Leader>tu ^r+
 nmap <Leader>tn ^r-
 nmap <Leader>tc ^r=
 nmap <Leader>tt o-<Space>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" MISC
 
@@ -215,7 +227,8 @@ cnoreabbrev AG Ack
 "  fzf.vim
 let g:fzf_preview_window = ["up:40%", "ctrl-/"]
 let g:fzf_buffers_jump = 1
-nmap <Leader>oo :Files<cr>
+nmap <Leader>oo :GFiles<cr>
+nmap <Leader>of :Files<cr>
 nmap <Leader>os :Rg<cr>
 nmap <Leader>or :History<cr>
 nmap <Leader>ob :Buffers<cr>
@@ -234,8 +247,8 @@ nmap ga <Plug>(EasyAlign)
 
 "-------------------------------------------------------------------------------
 " Copilot
-imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
-let g:copilot_no_tab_map = v:true
+" imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+" let g:copilot_no_tab_map = v:true
 
 "-------------------------------------------------------------------------------
 " lightline.vim
@@ -262,8 +275,9 @@ let g:lightline = {
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Lua configuration
 
-lua require("config")
+let $MYVIMLUARC = "/home/madx/.config/nvim/lua/madx-config.lua"
 
+lua require("madx-config")
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" VIM PROJECT FILES
@@ -271,3 +285,4 @@ let s:vimprojfile = findfile('.vimproject', '.;')
 if !empty(s:vimprojfile)
   exec 'source '.fnameescape(s:vimprojfile)
 endif
+
