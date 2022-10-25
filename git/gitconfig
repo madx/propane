@@ -30,6 +30,7 @@
   df = diff --no-prefix
   ds = diff --no-prefix --staged
   dt = diff --stat
+  sdiff = !git -c delta.side-by-side=true diff
   mdr = !git diff $@ | mdr
   mds = !git diff --staged $@ | mdr
   div = !git hist ${1:-$(git upstream)}^\\! HEAD
@@ -37,7 +38,7 @@
   # Merging and rebasing
   ff = merge --ff-only
   resolve   = !sh -c 'git conflicts && $EDITOR $(git conflicts) +\"/<<<<\"'
-  conflicts = !sh -c 'git st | grep ^UU | sed "s/UU\\ //"'
+  conflicts = !sh -c 'git st | grep "^\\\\\\(UU\\\\\\|AA\\\\\\)" | sed -e "s/^UU\\ //" -e "s/^AA\\ //"'
   mark-resolved = !git add `git conflicts`
   refresh = !git co master && git pull && git co - && git rebase master
 
@@ -70,9 +71,11 @@
   default = upstream
 [rebase]
   autosquash = true
+	updateRefs = true
 [core]
   whitespace = trailing-space,space-before-tab,tab-in-indent
   pager = delta
+	excludesfile = /home/madx/.gitignore
 [interactive]
   diffFilter = delta --color-only
 [delta]
@@ -83,7 +86,7 @@
 [merge]
   conflictstyle=diff3
 [pull]
-  rebase = merges
+	rebase = merges
 [rerere]
   enabled = true
 [fetch]
@@ -97,6 +100,7 @@
 [diff]
   renames = true
   colorMoved = default
+	tool = vimdiff
 [identity "eshard"]
   name = "François Vaux"
   email = francois.vaux@eshard.com
