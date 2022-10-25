@@ -22,3 +22,6 @@ TAB: menu-complete
 # C-Up/C-Down
 "\e[1;5A": previous-history
 "\e[1;5B": next-history
+
+"\C-j": "\C-ucd $(bm --expand)\C-m\C-l"
+"\C-p": "\C-utmux-sesh\C-m"
