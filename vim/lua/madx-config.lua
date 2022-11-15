@@ -142,10 +142,16 @@ end
 
 lspconfig.tsserver.setup({
   capabilities = capabilities,
+  init_options = {
+    preferences = {
+      importModuleSpecifierPreference = "non-relative"
+    }
+  },
   on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
 
+    -- TODO: move to typescript.nvim
     local ts_utils = require("nvim-lsp-ts-utils")
     ts_utils.setup({})
     ts_utils.setup_client(client)

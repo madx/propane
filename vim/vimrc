@@ -232,6 +232,7 @@ nmap <Leader>of :Files<cr>
 nmap <Leader>os :Rg<cr>
 nmap <Leader>or :History<cr>
 nmap <Leader>ob :Buffers<cr>
+nmap <Leader>od :e %%<cr>
 " Search for word under cursor
 nmap <Leader>S yiw:Rg <C-R>"<cr>
 vmap <Leader>S y:Rg <C-R>"<cr>
