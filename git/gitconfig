@@ -40,7 +40,7 @@
   resolve   = !sh -c 'git conflicts && $EDITOR $(git conflicts) +\"/<<<<\"'
   conflicts = !sh -c 'git st | grep "^\\\\\\(UU\\\\\\|AA\\\\\\)" | sed -e "s/^UU\\ //" -e "s/^AA\\ //"'
   mark-resolved = !git add `git conflicts`
-  refresh = !git co master && git pull && git co - && git rebase master
+  refresh = !git co main && git pull && git co - && git rebase main
 
   # Misc
   hub-clone = !sh -c 'git clone git://github.com/$0.git $1'
@@ -117,3 +117,6 @@
 [identity "akeneo"]
 	name = François Vaux
 	email = francois.vaux@akeneo.com
+[advice]
+	ignoreHook = false
+	ignoredHook = false
