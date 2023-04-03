@@ -15,17 +15,14 @@ end
 --------------------------------------------------------------------------------
 -- Trouble
 require("trouble").setup {
-  icons = false,
+  icons = true,
+  height = 8,
+  padding = false,
+  auto_open = false,
+  auto_close = false,
   fold_open = "v",
   fold_closed = ">",
   indent_lines = false,
-  signs = {
-    error = "error",
-    warning = "warn",
-    hint = "hint",
-    information = "info"
-  },
-  use_diagnostic_signs = false
 }
 
 --------------------------------------------------------------------------------
@@ -39,10 +36,10 @@ require("nvim-lsp-installer").setup {
 --------------------------------------------------------------------------------
 -- Treesitter
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "javascript", "typescript", "html", "markdown", "html", "css" },
+  ensure_installed = { "javascript", "typescript", "html", "markdown", "markdown_inline", "html", "css" },
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = { "markdown" },
   },
   indent = {
     enable = true,
@@ -94,6 +91,7 @@ cmp.setup({
     { name = 'buffer' },
     { name = 'luasnip' },
     { name = 'path' },
+    { name = 'nvim_lsp_signature_help' },
     -- { name = 'cmdline' },
   }),
   snippet = {
@@ -108,7 +106,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 --------------------------------------------------------------------------------
 -- LSP servers configurations
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   vim.cmd("command! LspDef lua vim.lsp.buf.definition()")
   vim.cmd("command! LspFormatting lua vim.lsp.buf.formatting()")
   vim.cmd("command! LspCodeAction lua vim.lsp.buf.code_action()")
@@ -123,7 +121,8 @@ local on_attach = function(client, bufnr)
   vim.cmd("command! LspSignatureHelp lua vim.lsp.buf.signature_help()")
 
   buf_map(bufnr, "n", "<Leader>gd", ":LspDef<CR>")
-  buf_map(bufnr, "n", "<Leader>gr", ":LspRename<CR>")
+  buf_map(bufnr, "n", "<Leader>gr", ":LspRefs<CR>")
+  buf_map(bufnr, "n", "<Leader>gR", ":LspRename<CR>")
   buf_map(bufnr, "n", "<Leader>gt", ":LspTypeDef<CR>")
   buf_map(bufnr, "n", "<Leader>gg", ":LspHover<CR>")
   buf_map(bufnr, "n", "<Leader>gn", ":LspDiagPrev<CR>")
@@ -160,7 +159,7 @@ lspconfig.tsserver.setup({
   end
 })
 
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
   capabilities = capabilities,
   on_attach = on_attach,
   settings = {
@@ -179,7 +178,7 @@ null_ls.setup({
   sources = {
     null_ls.builtins.diagnostics.eslint_d,
     null_ls.builtins.code_actions.eslint_d,
-    -- null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.formatting.eslint_d,
     null_ls.builtins.formatting.prettierd,
   },
   on_attach = function()
@@ -194,6 +193,7 @@ require("pears").setup()
 --------------------------------------------------------------------------------
 -- gitsigns
 require("gitsigns").setup({
+  numhl = true,
   current_line_blame = true,
   current_line_blame_opts = {
     virt_text = true,
@@ -212,3 +212,50 @@ require('treesitter-context').setup({
   max_lines = 0,
   trim_scope = 'outer'
 })
+
+--------------------------------------------------------------------------------
+-- obsidian.nvim
+require("obsidian").setup({
+  dir = "~/Sync/Obsidian",
+  completion = {
+    nvim_cmp = true,
+  },
+  use_advanded_uri = true,
+  disable_frontmatter = true
+})
+
+vim.keymap.set(
+  "n",
+  "gf",
+  function()
+    if require('obsidian').util.cursor_on_markdown_link() then
+      return "<cmd>ObsidianFollowLink<CR>"
+    else
+      return "gf"
+    end
+  end,
+  { noremap = false, expr = true}
+)
+
+--------------------------------------------------------------------------------
+-- nvim-surround
+require('nvim-surround').setup()
+
+--------------------------------------------------------------------------------
+-- numb
+require('numb').setup()
+
+--------------------------------------------------------------------------------
+-- nvim-tree
+-- require("nvim-tree").setup({
+--   open_on_setup = false,
+--   update_focused_file = {
+--     enable = true
+--   },
+--   diagnostics = {
+--     enable = true
+--   },
+--   renderer = {
+--     indent_width = 1,
+--   }
+-- })
