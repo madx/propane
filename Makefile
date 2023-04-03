@@ -1,4 +1,11 @@
-include colors.make
+# Colors
+
+_R = "\\033[31m"
+_G = "\\033[32m"
+_Y = "\\033[33m"
+_E = "\\033[0m"
+
+CURRENT_DIR = $(shell pwd)
 
 all: system shell git vim
 
@@ -18,4 +25,10 @@ vim:
 	@echo -e "$(_G)▸ configuring vim$(_E)"
 	@make -C vim
 
-.PHONY: all system shell git vim
+tmux: $(HOME)/.tmux.conf
+
+$(HOME)/.tmux.conf:
+	@echo -e "$(_G)▸ configuring tmux$(_E)"
+	ln -s $(CURRENT_DIR)/tmux.conf $@
+
+.PHONY: all system shell git vim tmux
