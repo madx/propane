@@ -58,7 +58,7 @@ if [ -f $BASH_CONF_DIR/prompt ]; then
   . $BASH_CONF_DIR/prompt
 fi
 
-if [ -f $XDG_CACHE_HOME/last_working_directory ]; then
+if [[ -z $TMUX ]] && [ -f $XDG_CACHE_HOME/last_working_directory ]; then
   cd "$(cat $XDG_CACHE_HOME/last_working_directory)"
 fi
 
