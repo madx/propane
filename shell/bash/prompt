@@ -73,7 +73,7 @@ function _save_venv {
   fi
 }
 
-export PS1='\[\e[G\e[0;30m\]$(__hbar)\[\e[0m\]\r$(__prompt_docker_id)\[\e[1;${PC}m\]$(__prompt_git_wd)\[\e[0m\]$(__prompt_git_branch)\[\e[0;32m\]$(__prompt_venv)\[\e[0m\]`if [ "$__RET" -ne "0" ]; then echo " \e[41;30m $__RET \e[0m"; fi` \n↳ '
+export PS1='\[\e[G\e[0;30m\]$(__hbar)\[\e[0m\]\r$(__prompt_docker_id)\[\e[1;${PC}m\]$(__prompt_git_wd)\[\e[0m\]$(__prompt_git_branch)\[\e[0;32m\]$(__prompt_venv)\[\e[0m\]`if [ "$__RET" -ne "0" ]; then echo " \e[41;30m $__RET \e[0m"; fi` \n\[\e[1m\]❯\[\e[0m\] '
 
 case "$TERM" in
 xterm*|rxvt*|screen*|st*|alacritty*)
