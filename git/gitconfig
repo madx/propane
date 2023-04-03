@@ -14,6 +14,7 @@
   quick-rebase = !EDITOR=cat git rebase -i
 
   # Index manipulation
+  sw = switch
   co = checkout
   cb = checkout -b
   au = add -u
@@ -95,7 +96,7 @@
   name = François Vaux
   email = francois@yapok.org
 [identity "github"]
-  name = madx
+  name = "François Vaux"
   email = madx+github@yapok.org
 [diff]
   renames = true
