@@ -25,3 +25,4 @@ TAB: menu-complete
 
 "\C-j": "\C-ucd $(bm --expand)\C-m\C-l"
 "\C-p": "\C-utmux-sesh\C-m"
+"\C-b": "\C-ugit switch $(git branch | fzf)\C-m\C-l"
