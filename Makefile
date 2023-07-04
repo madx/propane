@@ -21,9 +21,9 @@ git:
 	@echo -e "$(_G)▸ configuring git$(_E)"
 	@make -C git
 
-vim:
-	@echo -e "$(_G)▸ configuring vim$(_E)"
-	@make -C vim
+nvim:
+	@echo -e "$(_G)▸ configuring neovim$(_E)"
+	@make -C nvim
 
 tmux: $(HOME)/.tmux.conf
 
