@@ -26,7 +26,7 @@
   ls = !git hist -5
   lsm = !git hist -10
   lsmm = !git hist -20
-  g = !git hist --graph --all
+  g = !git hist --graph --branches
   ll = !git ls --stat
   df = diff --no-prefix
   ds = diff --no-prefix --staged
