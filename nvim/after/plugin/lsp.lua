@@ -27,7 +27,18 @@ lsp.skip_server_setup({ "tsserver" }) -- Configured manually with typescript.nvi
 local lspconfig = require("lspconfig")
 
 lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
-lspconfig.tailwindcss.setup({})
+lspconfig.tailwindcss.setup({
+  settings = {
+    tailwindCSS = {
+      experimental = {
+        classRegex = {
+          { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+          { "cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+        },
+      },
+    },
+  },
+})
 lspconfig.cssls.setup({})
 
 lsp.setup()

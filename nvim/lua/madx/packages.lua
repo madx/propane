@@ -78,7 +78,9 @@ require("packer").startup(function(use)
   use({
     "nacro90/numb.nvim",
     config = function()
-      require("numb").setup()
+      require("numb").setup({
+        hide_relativenumbers = true,
+      })
     end,
   })
   use("windwp/nvim-ts-autotag")
