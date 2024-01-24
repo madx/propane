@@ -1,9 +1,6 @@
-vim.g.mapleader = ","
-
 vim.keymap.set("n", "<Space>", ".")
 
 -- Center after moving
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
@@ -35,5 +32,7 @@ vim.keymap.set("v", "<Leader>c", "gc", { remap = true })
 vim.keymap.set("n", "<Leader>w", "<C-w>")
 vim.keymap.set("n", "<C-Left>", "<C-w>h")
 vim.keymap.set("n", "<C-Right>", "<C-w>l")
-vim.keymap.set("n", "<C-Up>", "<C-w>k")
-vim.keymap.set("n", "<C-Down>", "<C-w>j")
+
+-- Move lines around
+vim.keymap.set("n", "<C-Up>", '"_ddkP')
+vim.keymap.set("n", "<C-Down>", '"_ddp')

@@ -36,3 +36,13 @@ vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+-- Mouse
+vim.opt.mouse = "a"
+
+-- Timeouts
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
+
+-- Completion
+vim.opt.completeopt = "menuone,noselect"
